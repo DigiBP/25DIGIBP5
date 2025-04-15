@@ -9,7 +9,7 @@
 ## Team Members
 
 Jasmin Winter
-Gilles Müllre
+Gilles Müller
 Claudio Schwaiger
 
 
