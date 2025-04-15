@@ -1,14 +1,17 @@
-# Projektname
+# Digitalisation of the Onboarding Process
 
-Kurze Beschreibung deines Projekts.
-
-## Features
+## Introduction
 
 - Punkt 1
 - Punkt 2
 - Punkt 3
 
-## Installation
+## Team Members
+
+Jasmin Winter
+Gilles Müllre
+Claudio Schwaiger
+
 
 ```bash
 git clone https://github.com/dein-benutzername/dein-repo.git
