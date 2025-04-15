@@ -12,6 +12,20 @@ Jasmin Winter
 Gilles Müller
 Claudio Schwaiger
 
+# As-Is Process
+
+
+## Challenges
+
+
+# To-Be Process
+
+
+## DMN
+
+
+## Forms
+
 
 ```bash
 git clone https://github.com/dein-benutzername/dein-repo.git
