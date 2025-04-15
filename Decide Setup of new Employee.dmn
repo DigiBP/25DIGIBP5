@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0fbmf36" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.32.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <decision id="drd_decisionEmployeeSetup" name="Employee Setup">
+    <informationRequirement id="InformationRequirement_13uxyhe">
+      <requiredInput href="#drd_role" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0oc8f3m">
+      <requiredInput href="#drd_mobility" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1tpp692">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Role</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0lv5q94" label="Mobility">
+        <inputExpression id="LiteralExpression_10ax1lo" typeRef="boolean">
+          <text>Mobility</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Hardware" name="Hardware" typeRef="string" />
+      <output id="OutputClause_0o7izrl" name="Application" typeRef="string" />
+      <output id="OutputClause_0a9avvm" label="Phone" name="Phone" typeRef="string" />
+      <output id="OutputClause_0awqwt8" label="Encryption" name="encyption" typeRef="boolean" />
+      <rule id="DecisionRule_066ryds">
+        <inputEntry id="UnaryTests_1kj7uqi">
+          <text>"Office Mitarbeiter (Nicht Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gda2xu">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_045tpv0">
+          <text>"ThinClient (Igel)"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0eosyxq">
+          <text>"M365"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ad914y">
+          <text>"IP-Telefon"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zdrp39">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ubih36">
+        <inputEntry id="UnaryTests_10hwsot">
+          <text>"Office Mitarbeiter (Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bf5wje">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1usie39">
+          <text>"Notebook Office (T14)"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1589ee1">
+          <text>"M365"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_06qxs0c">
+          <text>"iPhone 16 SE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_172a6cd">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1bgxw3h">
+        <inputEntry id="UnaryTests_0zmb7pq">
+          <text>"CAD-Zeichner (Nicht Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xy82j7">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cksz05">
+          <text>"Workstation CAD (P5)"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s4bt2c">
+          <text>"Team Center","NX"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0m94nyu">
+          <text>"IP-Telefon"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09bjzt2">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00prh1h">
+        <inputEntry id="UnaryTests_0bdy03w">
+          <text>"CAD-Zeichner (Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w9gw8p">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pbl9c7">
+          <text>"Notebook CAD (P15)"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09gdo6i">
+          <text>"Team Center","NX"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kl2jah">
+          <text>"iPhone 16 SE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0eke671">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0roagos">
+        <inputEntry id="UnaryTests_1ble6ij">
+          <text>"Software-Entwickler (Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1psbs9c">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bzxrrf">
+          <text>"Worksation Entwickler (P3)"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0esmqbz">
+          <text>"Visual Studio"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_084h1nm">
+          <text>"iPhone 16 SE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0v55dfl">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0eomhun">
+        <inputEntry id="UnaryTests_0xtaely">
+          <text>"Software-Entwickler (Nicht Mobil)"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a5u3qy">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1amj9p2">
+          <text>"Notebook Entwickler (P15)
+"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ivrtxz">
+          <text>"Visual Studio"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ckv3j0">
+          <text>"IP-Telefon"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0gr17yt">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0i48a3p">
+        <inputEntry id="UnaryTests_1pppc48">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j9o4mn">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07q9a43">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1wcyzsv">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0xuyc9k">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1eko7b3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0holpmb">
+        <inputEntry id="UnaryTests_1tydu6y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gzzv0l">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wxhazi">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hklg9o">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0o6hbu1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0u2yb05">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="drd_role" name="Role" />
+  <inputData id="drd_mobility" name="Mobility" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="drd_decisionEmployeeSetup">
+        <dc:Bounds height="80" width="180" x="370" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1y9o2we" dmnElementRef="drd_role">
+        <dc:Bounds height="45" width="125" x="197" y="277" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_11nfir3" dmnElementRef="InformationRequirement_13uxyhe">
+        <di:waypoint x="260" y="277" />
+        <di:waypoint x="430" y="190" />
+        <di:waypoint x="430" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0b3d52s" dmnElementRef="drd_mobility">
+        <dc:Bounds height="45" width="125" x="397" y="277" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cvsdg8" dmnElementRef="InformationRequirement_0oc8f3m">
+        <di:waypoint x="460" y="277" />
+        <di:waypoint x="490" y="190" />
+        <di:waypoint x="490" y="170" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
