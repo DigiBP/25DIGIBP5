@@ -9,12 +9,11 @@
 - Gilles Müller
 - Claudio Schwaiger
 
-
 ## Introduction
 
-Rheinmetall Air Defence AG, headquartered in Zurich, Switzerland, is a subsidiary of the German Rheinmetall Group and a recognized leader in the development of advanced air defence systems. With approximately 1,000 employees, the company specializes in radar-guided target tracking systems, anti-aircraft artillery, and missile defence technologies. Its globally deployed solutions—such as the Skyshield and Skyguard systems—are known for their accuracy and high operational effectiveness.
+The company, headquartered in Zurich, Switzerland, is a subsidiary of a German industrial group and a recognized leader in the development of advanced air defence systems. With approximately 1,000 employees, the company specializes in radar-guided target tracking systems, anti-aircraft artillery, and missile defence technologies. Its globally deployed solutions—such as modular defence platforms—are known for their accuracy and high operational effectiveness.
 
-The company benefits from the Rheinmetall Group’s IT standardization and centralization strategy, while a dedicated local IT unit of over 20 employees in Zurich supports business-critical functions on-site.
+The organization benefits from a centralized and standardized IT strategy defined at group level.
 
 This project aims to address inefficiencies in the current onboarding process by focusing on the **digitalization of cross-departmental workflows**. The existing process involves multiple internal and external systems (e.g. Enboarder, ServiceNow, Confluence, Active Directory, MDM, SAP) and stakeholders (HR, IT, SAP, supervisors, external providers). Despite having a defined structure, the process is heavily dependent on manual activities and informal communication channels.
 
@@ -29,26 +28,27 @@ Key goals include:
 These improvements aim to increase operational efficiency, reduce onboarding lead time, and ensure a positive employee experience from day one.
 
 # As-Is Process
+
 The onboarding process begins in the HR department, when HR receives the signed contract of the new employee. After creating a new employee profile in Enboarder, an automatic e-mail is sent to the supervisor, requesting them to complete the PDF form “Request New Employee”. HR further creates an Active Directory User for the new employee.
 
 After HR receives the completed form from the supervisor by e-mail, they add the new entry in Confluence and open a ticket in the internal ticketing system “ServiceNow” with the PDF attached to initiate the process of setting up the new employee’s equipment by the IT department.
 
-Communication between the HR and IT department is centres around ServiceNow and the Confluence page to provide information on the ticket status of the new employees entries. The Confluence page is maintained by IT department as a comprehensive overview for HR, as the status of the ticket can only be queried on a user-specific basis in ServiceNow.
+Communication between the HR and IT department is centered around ServiceNow and the Confluence page to provide information on the ticket status of the new employee’s entries. The Confluence page is maintained by IT as a comprehensive overview for HR, as the status of the ticket can only be queried on a user-specific basis in ServiceNow.
 
 To ensure hardware provision to the new employee on time, the ticket must be created at least two weeks prior to the employee’s start date. When the IT department receives the ticket, it checks it for completeness and accepts the new ticket. If the ticket does not meet the time criteria, the availability of the hardware on the start date cannot be guaranteed and a new date must be set for the hardware handover.
 
 The PDF “Request New Employee” is then saved in the network drive and the Confluence page is updated. Furthermore, the IT department opens a ticket at the external provider’s ticketing system, requesting the setup of the hardware of the new employee. The external ticketing system is the primary communication channel with the external provider. The requested setup includes configuring the notebook, ordering a proxy, granting user access and creating the user in the MDM system. These tasks at the IT department generally require two working days.
 
-There is an SLA with the external provider in place. The ticket must be processed and finalised within six working days, including handover of the hardware back to the IT department.
-Upon receiving the notebook, the IT department verifies the completeness and, if necessary, finalises the setup. The notebook is then personalised and access to the required file shares configured. Further the business mobile is prepared. One to two working days before the employees start date, the workstation is completely setup to ensure everything is ready on the first day. The last step is to update the Confluence page.
+There is an SLA with the external provider in place. The ticket must be processed and finalized within six working days, including handover of the hardware back to the IT department.  
+Upon receiving the notebook, the IT department verifies the completeness and, if necessary, finalizes the setup. The notebook is then personalized and access to the required file shares configured. Further, the business mobile is prepared. One to two working days before the employee’s start date, the workstation is completely set up to ensure everything is ready on the first day. The last step is to update the Confluence page.
 
 The supervisor is informed by HR about the readiness of the hardware by e-mail.
 
 On the first workday, the new employee receives their hardware from the IT department and takes part in an introductory IT training session.
 
-HR also notifies the SAP department about the new employee for user creation. The SAP then carries out a user comparison in the system and creates the new user account. If no additional rights are required, the account is handed over to the new employee.
+HR also notifies the SAP department about the new employee for user creation. The SAP team then carries out a user comparison in the system and creates the new user account. If no additional rights are required, the account is handed over to the new employee.
 
-If additional rights are required, the supervisor opens a ticket in ServiceNow to request the necessary roles. An authorization request is created at SAP department and the signature of the key user is obtained. The supervisor signs the request, and the account is updated accordingly.
+If additional rights are required, the supervisor opens a ticket in ServiceNow to request the necessary roles. An authorization request is created by the SAP department, the signature of the key user is obtained, and the supervisor signs the request. The account is updated accordingly.
 
 ## Identified Challenges of the As-is Process
 
@@ -82,11 +82,11 @@ ServiceNow does not offer a consolidated view of onboarding tickets. HR relies s
 Late or incomplete ticket submissions trigger reactive measures like rescheduling hardware handovers rather than proactive interventions.  
 **Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
 
-
 # To-Be Process
 To be updated
 
 ## Process Improvements
+To be updated
 
 ## DMN
 To be updated
