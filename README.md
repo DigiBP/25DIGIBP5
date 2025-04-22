@@ -1,8 +1,5 @@
 # Digitalisation of the Onboarding Process
 
-# Questions for the Coaching Sessions
-- xy
-
 # Team Members
 
 - Jasmin Winter
@@ -83,13 +80,20 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 **Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
 
 # To-Be Process
-To be updated
+- explain general process flow
+- no need to get into each and every task
 
 ## Process Improvements
-To be updated
+- explain what you improved
+- refer to tasks (maybe)
 
 ## DMN
-To be updated
+- include picture
+- why decide on this setup
+- explain what happns
+
 
 ## Forms
-To be updated
+- include picture
+- why decide on setup
+- explain what happens
