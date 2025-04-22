@@ -36,35 +36,35 @@ If additional rights are required, the supervisor opens a ticket in ServiceNow t
 
 ## Challenges
 
-This document outlines the main operational and organizational challenges identified in the employee onboarding process.
+The current onboarding process faces several critical challenges that impact efficiency, transparency, and user experience. Below are the key pain points:
 
 ### High Process Complexity & Fragmentation
-The onboarding process involves multiple systems (Enboarder, ServiceNow, Confluence, external provider systems, Active Directory, MDM, SAP) and stakeholders (HR, IT, supervisors, SAP department, external providers).  
-**Risk:** Process inefficiencies, handover delays, and increased potential for coordination errors.
+The onboarding workflow spans multiple systems (Enboarder, ServiceNow, Confluence, external provider systems, Active Directory, MDM, SAP) and various stakeholders (HR, IT, supervisors, SAP department, external providers).  
+**Risk:** Increased coordination effort, handover delays, and risk of process breakdowns.
 
 ### Manual and Email-Dependent Communication
-Critical process steps (form submission, notifications, status updates) are handled manually via email.  
-**Risk:** Low process transparency, missed updates, and lack of traceability.
+Key process steps—such as submitting forms, notifying stakeholders, and updating statuses—are handled manually via email.  
+**Risk:** Low transparency, high error probability, and lack of auditability.
 
 ### Lack of Workflow Automation
-Several activities—such as PDF handling, ticket creation, Confluence updates, and internal validations—are not automated.  
-**Risk:** Increased administrative workload, error-proneness, and inconsistent data entry.
+Tasks like PDF processing, ticket creation, Confluence page updates, and internal approvals are executed without automation.  
+**Risk:** Operational inefficiencies, inconsistent data, and increased manual workload.
 
 ### Time Sensitivity vs. Lack of Enforcement
-Tickets must be created at least two weeks prior to the start date, but there are no systemic controls or escalation mechanisms in place.  
-**Risk:** Missed hardware readiness deadlines and disruption of onboarding timelines.
+Although tickets must be created at least two weeks before the start date, there are no automated controls or escalation paths to enforce this timeline.  
+**Risk:** Missed hardware provisioning deadlines and onboarding delays.
 
 ### Redundant Documentation & Storage
-Employee data is documented in multiple locations (PDF, network drive, Confluence, ticketing systems), often manually.  
-**Risk:** Data inconsistencies, version conflicts, and duplicated administrative effort.
+Employee-related information is captured and stored redundantly (e.g. PDF form, network drive, Confluence, ticketing systems), often manually.  
+**Risk:** Data inconsistencies, version control issues, and unnecessary duplication of effort.
 
 ### Limited Transparency & Status Tracking
-ServiceNow does not provide a holistic view of onboarding tickets. The Confluence page, updated manually by IT, is the only central overview for HR.  
-**Risk:** Delays in status tracking, high dependency on IT, and inefficient follow-ups.
+ServiceNow does not offer a consolidated view of onboarding tickets. HR relies solely on a manually maintained Confluence page by IT.  
+**Risk:** Poor visibility, dependency on IT updates, and inefficient coordination.
 
 ### Reactive Issue Handling
-Late ticket submissions lead to rescheduling of hardware handovers instead of proactive resolution or automated fallback scenarios.  
-**Risk:** Negative onboarding experience for new employees, low first-day productivity.
+Late or incomplete ticket submissions trigger reactive measures like rescheduling hardware handovers rather than proactive interventions.  
+**Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
 
 # To-Be Process
 
