@@ -50,7 +50,7 @@ HR also notifies the SAP department about the new employee for user creation. Th
 
 If additional rights are required, the supervisor opens a ticket in ServiceNow to request the necessary roles. An authorization request is created at SAP department and the signature of the key user is obtained. The supervisor signs the request, and the account is updated accordingly.
 
-## Challenges
+## Identified Challenges of the As-is Process
 
 The current onboarding process faces several critical challenges that impact efficiency, transparency, and user experience. Below are the key pain points:
 
@@ -85,6 +85,8 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 
 # To-Be Process
 To be updated
+
+## Process Improvements
 
 ## DMN
 To be updated
