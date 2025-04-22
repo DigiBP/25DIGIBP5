@@ -1,16 +1,28 @@
 # Digitalisation of the Onboarding Process
 
-## Introduction
+# Questions for the Coaching Sessions
+- xy
 
-- Punkt 1
-- Punkt 2
-- Punkt 3
-
-## Team Members
+# Team Members
 
 - Jasmin Winter
 - Gilles Müller
 - Claudio Schwaiger
+
+
+## Introduction
+
+Rheinmetall Air Defence AG, headquartered in Zurich, Switzerland, is a subsidiary of the German Rheinmetall Group and a recognized leader in the development of advanced air defence systems. With approximately 1,000 employees, the company specializes in radar-guided target tracking systems, anti-aircraft artillery, and missile defence technologies. Its globally deployed solutions—such as the Skyshield and Skyguard systems—are known for their accuracy and high operational effectiveness.
+
+The company benefits from the Rheinmetall Group’s IT standardization and centralization strategy, while a dedicated local IT unit of over 20 employees in Zurich supports business-critical functions on-site.
+
+This project aims to address inefficiencies in the current onboarding process by focusing on the **digitalization of cross-departmental workflows**. The existing process involves multiple internal and external systems (e.g. Enboarder, ServiceNow, Confluence, Active Directory, MDM, SAP) and stakeholders (HR, IT, SAP, supervisors, external providers). Despite having a defined structure, the process is heavily dependent on manual activities and informal communication channels.
+
+### Goal
+The core objective of the digitalization initiative is to ensure that new employees are provided with all necessary IT hardware and system access on their **first working day**. This is to be achieved by:
+- Reducing delays between stakeholders and process steps, and
+- Automating repetitive and time-sensitive activities.
+
 
 # As-Is Process
 The onboarding process begins in the HR department, when HR receives the signed contract of the new employee. After creating a new employee profile in Enboarder, an automatic e-mail is sent to the supervisor, requesting them to complete the PDF form “Request New Employee”. HR further creates an Active Directory User for the new employee.
@@ -65,6 +77,7 @@ ServiceNow does not offer a consolidated view of onboarding tickets. HR relies s
 ### Reactive Issue Handling
 Late or incomplete ticket submissions trigger reactive measures like rescheduling hardware handovers rather than proactive interventions.  
 **Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
+
 
 # To-Be Process
 
