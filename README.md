@@ -19,10 +19,14 @@ The company benefits from the Rheinmetall Group’s IT standardization and centr
 This project aims to address inefficiencies in the current onboarding process by focusing on the **digitalization of cross-departmental workflows**. The existing process involves multiple internal and external systems (e.g. Enboarder, ServiceNow, Confluence, Active Directory, MDM, SAP) and stakeholders (HR, IT, SAP, supervisors, external providers). Despite having a defined structure, the process is heavily dependent on manual activities and informal communication channels.
 
 ### Goal
-The core objective of the digitalization initiative is to ensure that new employees are provided with all necessary IT hardware and system access on their **first working day**. This is to be achieved by:
-- Reducing delays between stakeholders and process steps, and
-- Automating repetitive and time-sensitive activities.
+The core objective of this digitalization initiative is to ensure that new employees are equipped with all necessary IT hardware and system access on their first working day. This requires a fundamental redesign of the existing onboarding process, which is currently characterized by high manual effort, fragmented systems, and inconsistent handovers.
 
+Key goals include:
+- **Digitalizing the end-to-end onboarding process** to eliminate manual dependencies,
+- **Reducing process delays** between stakeholders by streamlining and standardizing communication, and
+- **Automating repetitive and time-sensitive activities**, such as ticket creation and form handling.
+
+These improvements aim to increase operational efficiency, reduce onboarding lead time, and ensure a positive employee experience from day one.
 
 # As-Is Process
 The onboarding process begins in the HR department, when HR receives the signed contract of the new employee. After creating a new employee profile in Enboarder, an automatic e-mail is sent to the supervisor, requesting them to complete the PDF form “Request New Employee”. HR further creates an Active Directory User for the new employee.
