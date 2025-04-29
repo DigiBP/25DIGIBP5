@@ -91,6 +91,7 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - include picture
 - why decide on this setup
 - explain what happns
+![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
 
 
 ## Forms
