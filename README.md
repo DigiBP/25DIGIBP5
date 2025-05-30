@@ -248,28 +248,6 @@ parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, 
 * Camunda Modeler
 * Google Sheets (as request/ticket database)
 
-## REPOSITORY STRUCTURE
-
-```
-.
-├── camunda/
-│   └── onboarding-partial-delivery-check.bpmn
-├── make/
-│   └── scenario-screenshots/
-│       ├── webhook-input.png
-│       ├── router-logic.png
-│       ├── set-variable.png
-│       └── update-sheet.png
-├── diagram/
-│   └── full-onboarding-process.png
-├── README.md
-```
-
-## CREDITS
-
-This module was designed and implemented to ensure smooth onboarding logistics and minimize supervisor overload by automating edge cases with minimal effort.
-
-It can be adapted or expanded for more complex planning scenarios like country-specific shipping times or hardware type constraints.
 
 ## Process Improvements
 - explain what you improved
