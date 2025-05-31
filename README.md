@@ -84,7 +84,7 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - no need to get into each and every task
 # Digitalisation of the Onboarding Process
 
-## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
+### AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
 In the full onboarding process, once the contract is signed, the system prepares the technical setup for the new employee. This involves generating a setup payload, creating a ticket in the service portal, and triggering the delivery of required hardware.
 
@@ -95,13 +95,13 @@ If the entry date is too soon (less than 14 days), it may not be feasible to del
 * Automatically adjusting the delivery date
 * Updating the internal Google Sheet and Camunda workflow accordingly
 
-## WHAT THIS MODULE DOES
+### WHAT THIS MODULE DOES
 
-### GOAL
+#### GOAL
 
 Ensure realistic lead times for onboarding hardware delivery and communicate changes.
 
-### FLOW SUMMARY
+#### FLOW SUMMARY
 
 1. Camunda triggers Make with entry data (start date, ticket info, etc.)
 2. Make evaluates if the requested entry date is less than 14 days away
@@ -115,9 +115,9 @@ Ensure realistic lead times for onboarding hardware delivery and communicate cha
 
    * Process continues with the original delivery date
 
-## IMPLEMENTATION DETAILS
+### IMPLEMENTATION DETAILS
 
-### CAMUNDA BPM
+#### CAMUNDA BPM
 
 * Service Task: "Check entry date" sends data to Make webhook
 * Exclusive Gateway: Evaluates IsTooShortNotice variable
@@ -127,7 +127,7 @@ Ensure realistic lead times for onboarding hardware delivery and communicate cha
   * If false: Continue as planned
 * Downstream Use: Both paths set a common variable deliveryDate, which is used in the ticketing step
 
-### MAKE SCENARIO OVERVIEW
+#### MAKE SCENARIO OVERVIEW
 
 1. Webhook receives POST from Camunda
 2. Google Sheets (Search) finds the row by Employee ID
@@ -141,26 +141,26 @@ Ensure realistic lead times for onboarding hardware delivery and communicate cha
 
    * Return IsTooShortNotice = false and keep existing date
 
-### DATE EVALUATION LOGIC
+#### DATE EVALUATION LOGIC
 
 ```
 parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, "DD.MM.YYYY"), 14)
 ```
 
-## GOOGLE SHEETS UPDATE
+### GOOGLE SHEETS UPDATE
 
 * Delivery Date column is set to deliveryDateCalculated
 * Ticket Status column is set to "Updated"
 * Row to update is found using the rowNumber from the search module
 
-## ADVANTAGES
+### ADVANTAGES
 
 * Automated logic replaces manual review
 * Human escalation only when needed (via supervisor notification)
 * Dynamic update to Google Sheets without scripting
 * Easily pluggable into any BPMN process with Camunda
 
-## RELATED TOOLS
+### RELATED TOOLS
 
 * Make (Integromat)
 * Camunda Modeler
