@@ -139,9 +139,46 @@ To prevent such errors, both variables are deleted directly after their last usa
 
 ## Jasmin plus DMN
 ![image](https://github.com/user-attachments/assets/fde8ac36-606a-478c-8d8b-a0e1f5227aab)
-- include picture
-- why decide on this setup
-- explain what happns
+
+This repository contains a DMN (Decision Model and Notation) table used to determine the appropriate IT setup for new employees during the onboarding process. The decision logic ensures standardized, rule-based allocation of hardware, software, phone equipment, and encryption settings based on employee role and mobility requirements.
+ 
+### Purpose
+ 
+The DMN decision table automates the selection of IT equipment and software configurations for new hires. It supports consistent decision-making and reduces manual coordination between HR, IT, and other stakeholders.
+ 
+### Input Parameters
+ 
+- `Role` (string): The employee's job function (e.g., "Office Employee", "CAD Designer", "Software Developer")
+- `Mobility` (boolean): Indicates whether the employee requires a mobile setup (true/false)
+ 
+### Output Parameters
+ 
+Based on the combination of `Role` and `Mobility`, the following outputs are defined:
+ 
+- `Hardware`: The assigned device type (e.g., ThinClient, Notebook, Workstation)
+- `Application`: The main application package needed (e.g., M365, Team Center, Visual Studio)
+- `Phone`: Type of phone equipment assigned (e.g., IP phone, iPhone 16 SE)
+- `Encryption`: Whether encryption is required for the setup (true/false)
+ 
+### Example Rules
+ 
+| Role              | Mobility | Hardware              | Application        | Phone         | Encryption |
+|-------------------|----------|------------------------|--------------------|---------------|------------|
+| Office Employee    | false    | ThinClient (Igel)      | M365               | IP-Telefon     | false      |
+| Office Employee    | true     | Notebook Office (T14)  | M365               | iPhone 16 SE   | true       |
+| CAD Designer       | false    | Workstation CAD (P5)   | Team Center, NX    | IP-Telefon     | false      |
+| CAD Designer       | true     | Notebook CAD (P15)     | Team Center, NX    | iPhone 16 SE   | true       |
+| Software Developer | true     | Notebook Entwickler    | Visual Studio      | iPhone 16 SE   | true       |
+| Software Developer | false    | Workstation Entwickler | Visual Studio      | IP-Telefon     | false      |
+ 
+### Benefits
+ 
+- Reduces manual effort in IT configuration
+- Ensures consistent and secure setup across the organization
+- Easy to extend and maintain as roles or equipment evolve
+- Integrates into automated onboarding workflows
+ 
+
 ![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
 
 
