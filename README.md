@@ -188,6 +188,9 @@ If the requested delivery time is too short, the system notifies the supervisor 
 
 The IT provider receives a structured email with the exact hardware and setup requirements for the new employee—generated from the previously selected configuration via DMN logic.
 
+### Hardware received and installed
+After the Hardware is received from the External IT Provider the Internal IT will install the Hardware and fullfill the Usertask in Camunda the Google Forms then will update the Status of the Ticket to done with the Date and time.
+
 ### ADVANTAGES
 
 - Fully **automated validation** of onboarding timelines
