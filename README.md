@@ -108,8 +108,6 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 
 ## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
-## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
-
 ![BPMN Overview](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
 
 This module is part of the digital onboarding process and ensures that IT hardware can be delivered on time for new employees. It validates if the lead time before the employee's start date is sufficient and triggers appropriate actions if not.
