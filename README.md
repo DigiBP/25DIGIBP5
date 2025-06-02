@@ -84,17 +84,45 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - no need to get into each and every task
 # Digitalisation of the Onboarding Process
 ![image](https://github.com/user-attachments/assets/ccd98821-ccf2-46ad-b1e7-4716d8f7bf4a)
-## Process Improvements Gilles
-- explain what you improved
-- refer to tasks (maybe)
+## Process Improvements
+## Benefits of the New Onboarding Process
+ 
+The improved onboarding workflow delivers tangible benefits across teams:
+ 
+### Higher Automation
+- Key steps like contract handling, ticket creation, setup payload generation, and SAP account provisioning are now automated.
+- Result: fewer manual handovers, reduced error rates, and faster turnaround times.
+ 
+### Unified Platform
+- All teams work within the same centralized ticketing system (e.g. ServiceNow).
+- This creates a **single source of truth**, ensuring consistent data and better traceability.
+ 
+### Improved Handling of Short-Notice Hires
+- Automatic notifications for hires with <2 weeks’ lead time.
+- Replaces fragile workarounds (e.g. saving forms to file shares) and improves preparedness.
+ 
+### Clear Role Allocation
+- Responsibilities are defined:
+ - **HR** → Contract management 
+ - **IT** → Hardware preparation 
+ - **SAP Team** → Account creation
+- Leads to smoother collaboration and fewer misunderstandings.
+ 
+### Measurable Process Completion
+- Process concludes with a defined step: _“Onboarding new employee completed”_.
+- Enables structured reporting and quality monitoring.
+ 
+### Scalability Through Structured Workflows
+- The standardized and automated setup scales efficiently across teams and sites.
+- Ideal for growing organizations or high onboarding volumes.
 
-## Process Start: Contract Creation and Dispatch
+### Process Start: Contract Creation and Dispatch
 The onboarding process begins with the start event **`New contract requested`**, which is triggered whenever a new employment contract is initiated.
 In the user task **`Define contract`**, HR personnel enter all relevant employee data using a structured Camunda form **'Information On New Employee'**. This form serves as the digital entry point for all relevant employee data and, with all fields being mandatory, guarantees complete and valid submissions. By digitizing this input at the very start, the process guarantees end-to-end data consistency and eliminates manual data transfer between systems. These values are stored in the Excel file **`My new employee (Antworten).xlsx`**, which currently acts as a placeholder for an integrated CRM system. 
 
 ![image](https://github.com/user-attachments/assets/0a00f630-6d42-42af-9be7-9cea984c8488)
 
-## Contract Generation and External Dispatch
+### Contract Generation and External Dispatch
 Once the data is captured, the script task **`Create contract`** compiles the form input into a structured JSON object named `contractPayload`. This payload contains all fields required for contract generation.
 The following service task **`Send contract`** sends this payload via HTTP to the Make.com scenario **`Create Contract`**. This scenario performs two parallel actions:
 - Generates a contract PDF using **PDF.co**
