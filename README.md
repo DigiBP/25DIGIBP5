@@ -205,10 +205,30 @@ The IT provider receives a structured email with the exact hardware and setup re
 - **Google Sheets** – Central data hub for onboarding tickets
 
 
-## Onbording first Day of the Employee
+## ONBOARDING FIRST DAY OF THE EMPLOYEE
+
 ![image](https://github.com/user-attachments/assets/5e794a42-e610-460f-b58a-4cdd243f0f99)
-- Checkliste bild plus erklärung
-  ![image](https://github.com/user-attachments/assets/a5c2471d-1061-419d-9f7f-bea878db8dd7)
+
+As the final step of the onboarding process, a digital checklist is provided to the new employee on their first working day. This checklist includes an introductory video and a confirmation section to ensure that all necessary steps and setups have been completed.
+
+The link is delivered via email and can be accessed through a simple HTML page.
+
+![image](https://github.com/user-attachments/assets/a5c2471d-1061-419d-9f7f-bea878db8dd7)
+
+### WHAT HAPPENS
+
+- The employee watches the onboarding video and reviews the checklist items.
+- Once completed, they confirm by checking a box and submitting the form.
+- The confirmation is automatically sent to HR and IT for documentation.
+- This ensures formal closure of the onboarding process and provides traceability.
+
+### BENEFITS
+
+- Standardized onboarding experience for all employees.
+- Digital confirmation ensures transparency and accountability.
+- No need for manual follow-ups or emails.
+- Can easily be extended with feedback fields or additional resources.
+
 
 
 
