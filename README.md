@@ -151,6 +151,7 @@ Ensure realistic lead times for onboarding hardware delivery and communicate cha
 * Downstream Use: Both paths set a common variable deliveryDate, which is used in the ticketing step
 
 #### MAKE SCENARIO OVERVIEW
+![image](https://github.com/user-attachments/assets/3f1f4a1f-70c5-4aed-b1bb-cd2d6cc3c6e5)
 
 1. Webhook receives POST from Camunda
 2. Google Sheets (Search) finds the row by Employee ID
@@ -175,6 +176,12 @@ parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, 
 * Delivery Date column is set to deliveryDateCalculated
 * Ticket Status column is set to "Updated"
 * Row to update is found using the rowNumber from the search module
+
+### Send Email do Supervisor if No
+![image](https://github.com/user-attachments/assets/426d24a1-5d17-430f-b2c9-9c0d5fbb5239)
+### Send Email to It Provider with required Hardware
+![image](https://github.com/user-attachments/assets/165b0f83-41f1-4e10-afcd-28f99c7de6fd)
+
 
 ### ADVANTAGES
 
