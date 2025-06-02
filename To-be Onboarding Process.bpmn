@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0gtzcls" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <bpmn:collaboration id="Final">
+    <bpmn:extensionElements />
+    <bpmn:participant id="Participant_0szfh0x" name="Onboarding Process" processRef="OnboardingProcess" />
+    <bpmn:participant id="Participant_1ipwzro" name="External IT Provider" />
+    <bpmn:participant id="Participant_1x33sab" name="New Employee" />
+    <bpmn:messageFlow id="Flow_05d6pki" sourceRef="Participant_1ipwzro" targetRef="HardwareReceived" />
+    <bpmn:messageFlow id="Flow_0p6c1fx" sourceRef="Activity_0icycfu" targetRef="Participant_1ipwzro" />
+    <bpmn:messageFlow id="Flow_09ok33n" sourceRef="Participant_1x33sab" targetRef="SignedContractReceived" />
+  </bpmn:collaboration>
+  <bpmn:process id="OnboardingProcess" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0d4kb48">
+      <bpmn:lane id="Lane_0u4anwz" name="SAP Team">
+        <bpmn:flowNodeRef>Activity_059mgur</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_02gmghw</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1m389q4" name="Supervisor">
+        <bpmn:flowNodeRef>Event_18nzrdz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_09fgvqh</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0y7wflb" name="IT Onsite Support">
+        <bpmn:flowNodeRef>Gateway_1ir976p</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0icycfu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>HardwareReceived</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0oz860d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0cjcxuc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06mx0wl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1wl6eif</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0er3wym</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0l7dtvg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_entryDateEmployee</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_087wc1v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1r3tirt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fo3jud</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1c8zv4a" name="HR">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>defineContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>createContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sendContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_19gh440</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_WaitForSignedContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_155m8fb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SignedContractReceived</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_04dekzx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1nfi60h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>dmnDecideSetup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0nedc58</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1" name="New contract requested">
+      <bpmn:extensionElements>
+        <camunda:formData businessKey="businessKey">
+          <camunda:formField id="businessKey" label="Business Key" type="string" defaultValue="${strongUuidGenerator.getNextId()}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0jqfn75</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="defineContract" name="Define contract" camunda:formRef="Form_InformationNewEmployee" camunda:formRefBinding="deployment">
+      <bpmn:incoming>Flow_0jqfn75</bpmn:incoming>
+      <bpmn:outgoing>Flow_10xcyqg</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0towwtc">
+        <bpmn:targetRef>DataStoreReference_0x3xqsd</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="createContract" name="Create contract" scriptFormat="javascript">
+      <bpmn:incoming>Flow_10xcyqg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pxy4km</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0yncrnb">
+        <bpmn:targetRef>DataStoreReference_0x3xqsd</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>// Komplexes Objekt für Make / Excel
+var contractPayload = {
+  name: execution.getVariable("f_name"),
+  surname: execution.getVariable("f_surname"),
+  employeeId: execution.getVariable("f_employee"),
+  address: execution.getVariable("f_address"),
+  dateOfBirth: execution.getVariable("f_dateofBirth"),
+  postalCode: execution.getVariable("f_postalCode"),
+  city: execution.getVariable("f_city"),
+  position: execution.getVariable("f_position"),
+  role: execution.getVariable("f_role"),
+  mobility: execution.getVariable("f_mobility"),
+  startDate: execution.getVariable("f_startDate"),
+  leaveDate: execution.getVariable("f_leaveDate"),
+  supervisor: execution.getVariable("f_supervisor"),
+  timestamp: new Date().toISOString()
+};
+
+// A) Für Service Task (Make)
+execution.setVariable("contractPayload", contractPayload);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="sendContract" name="Send contract" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables">contractPayload</camunda:inputParameter>
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/c8oumyk2g7l6l23swxury9117dni6bnx</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pxy4km</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hmz7yk</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0qtdxqa">
+        <bpmn:targetRef>DataStoreReference_0x3xqsd</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Activity_19gh440" name="Remove variable" scriptFormat="javascript">
+      <bpmn:incoming>Flow_1hmz7yk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c2j4qk</bpmn:outgoing>
+      <bpmn:script>execution.removeVariable("contractPayload");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0c2j4qk" sourceRef="Activity_19gh440" targetRef="e_WaitForSignedContract" />
+    <bpmn:sequenceFlow id="Flow_0zis88b" sourceRef="e_WaitForSignedContract" targetRef="Event_155m8fb" />
+    <bpmn:sequenceFlow id="Flow_05rs7uq" sourceRef="e_WaitForSignedContract" targetRef="SignedContractReceived" />
+    <bpmn:sequenceFlow id="Flow_0d0umhu" sourceRef="SignedContractReceived" targetRef="Gateway_1nfi60h" />
+    <bpmn:sequenceFlow id="Flow_1vmqwyt" sourceRef="Gateway_1nfi60h" targetRef="dmnDecideSetup" />
+    <bpmn:sequenceFlow id="Flow_0k5uaf0" sourceRef="Gateway_1nfi60h" targetRef="Activity_059mgur" />
+    <bpmn:sequenceFlow id="Flow_0jih8qy" sourceRef="dmnDecideSetup" targetRef="Activity_0nedc58" />
+    <bpmn:sequenceFlow id="Flow_1iydf2c" sourceRef="Activity_0nedc58" targetRef="Activity_0fo3jud" />
+    <bpmn:sequenceFlow id="Flow_03ce4q4" sourceRef="Event_155m8fb" targetRef="Event_04dekzx" />
+    <bpmn:sequenceFlow id="Flow_0c5tk5b" name="Yes" sourceRef="g_entryDateEmployee" targetRef="Activity_0l7dtvg">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${IsTooShortNotice == 'true'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0ph8euk" sourceRef="Activity_0l7dtvg" targetRef="Gateway_1ir976p" />
+    <bpmn:sequenceFlow id="Flow_0tslj0i" name="No" sourceRef="g_entryDateEmployee" targetRef="Gateway_1ir976p">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${IsTooShortNotice == 'false'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0xtw84f" sourceRef="Gateway_1ir976p" targetRef="Activity_0icycfu" />
+    <bpmn:sequenceFlow id="Flow_0l67l99" sourceRef="Activity_0icycfu" targetRef="HardwareReceived" />
+    <bpmn:sequenceFlow id="Flow_1ias75o" sourceRef="HardwareReceived" targetRef="Activity_0oz860d" />
+    <bpmn:sequenceFlow id="Flow_13182qo" sourceRef="Activity_0oz860d" targetRef="Activity_0cjcxuc" />
+    <bpmn:sequenceFlow id="Flow_0r22ame" sourceRef="Activity_0cjcxuc" targetRef="Activity_06mx0wl" />
+    <bpmn:sequenceFlow id="Flow_16kgx9h" sourceRef="Activity_06mx0wl" targetRef="Event_18nzrdz" />
+    <bpmn:sequenceFlow id="Flow_09kertz" sourceRef="Activity_09fgvqh" targetRef="Gateway_1wl6eif" />
+    <bpmn:sequenceFlow id="Flow_0rpu9ja" sourceRef="Activity_02gmghw" targetRef="Gateway_1wl6eif" />
+    <bpmn:sequenceFlow id="Flow_01x12af" sourceRef="Gateway_1wl6eif" targetRef="Event_0er3wym" />
+    <bpmn:sequenceFlow id="Flow_1xde9s1" sourceRef="Event_18nzrdz" targetRef="Activity_09fgvqh" />
+    <bpmn:sequenceFlow id="Flow_0p63az9" sourceRef="Activity_087wc1v" targetRef="g_entryDateEmployee" />
+    <bpmn:sequenceFlow id="Flow_11drbb9" sourceRef="Activity_1r3tirt" targetRef="Activity_087wc1v" />
+    <bpmn:sequenceFlow id="Flow_0jqfn75" sourceRef="StartEvent_1" targetRef="defineContract" />
+    <bpmn:sequenceFlow id="Flow_10xcyqg" sourceRef="defineContract" targetRef="createContract" />
+    <bpmn:sequenceFlow id="Flow_0pxy4km" sourceRef="createContract" targetRef="sendContract" />
+    <bpmn:sequenceFlow id="Flow_1hmz7yk" sourceRef="sendContract" targetRef="Activity_19gh440" />
+    <bpmn:sequenceFlow id="Flow_1czs5rv" sourceRef="Activity_0fo3jud" targetRef="Activity_1r3tirt" />
+    <bpmn:sequenceFlow id="Flow_02vicyb" sourceRef="Activity_059mgur" targetRef="Activity_02gmghw" />
+    <bpmn:dataStoreReference id="DataStoreReference_0x3xqsd" name="My new employee (Antworten).xlxs" />
+    <bpmn:dataStoreReference id="DataStoreReference_0tbikj6" name="Ticketing System SNOW.xlxs" />
+    <bpmn:eventBasedGateway id="e_WaitForSignedContract" name="Wait for signed contract">
+      <bpmn:incoming>Flow_0c2j4qk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zis88b</bpmn:outgoing>
+      <bpmn:outgoing>Flow_05rs7uq</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_155m8fb" name="1 week">
+      <bpmn:incoming>Flow_0zis88b</bpmn:incoming>
+      <bpmn:outgoing>Flow_03ce4q4</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1ywrwvi">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P7D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="SignedContractReceived" name="Signed contract received">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_05rs7uq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d0umhu</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_12rztm6" messageRef="Message_372ep41" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_04dekzx" name="Cancel process">
+      <bpmn:incoming>Flow_03ce4q4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:parallelGateway id="Gateway_1nfi60h">
+      <bpmn:incoming>Flow_0d0umhu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vmqwyt</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0k5uaf0</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:businessRuleTask id="dmnDecideSetup" name="Determine employee setup" camunda:resultVariable="role_Employee" camunda:decisionRef="drd_decisionEmployeeSetup" camunda:mapDecisionResult="singleResult">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Role">${f_role}</camunda:inputParameter>
+          <camunda:inputParameter name="Mobility">${f_mobility}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vmqwyt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jih8qy</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:scriptTask id="Activity_0nedc58" name="Generate setup payload" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0jih8qy</bpmn:incoming>
+      <bpmn:outgoing>Flow_1iydf2c</bpmn:outgoing>
+      <bpmn:script>// Fetch DMN result
+var setupResult = execution.getVariable("role_Employee");
+
+// Fetch form values
+var name = execution.getVariable("f_name");
+var surname = execution.getVariable("f_surname");
+var employeeId = execution.getVariable("f_employee"); // text field
+var supervisor = execution.getVariable("f_supervisor");
+var startDate = execution.getVariable("f_startDate");
+
+// Validation
+if (!setupResult) {
+  throw new Error("DMN decision 'role_Employee' is empty or not available.");
+}
+
+// Current date &amp; time
+var now = new Date();
+var today = now.toISOString().split("T")[0];
+var timestamp = now.toISOString();
+
+// Extract equipment info from DMN result
+var equipmentLines = [];
+equipmentLines.push("Hardware: " + (setupResult.Hardware || "Not specified"));
+equipmentLines.push("Applications: " + (Array.isArray(setupResult.Application) ? setupResult.Application.join(", ") : setupResult.Application || "Not specified"));
+equipmentLines.push("Phone: " + (setupResult.Phone || "Not specified"));
+equipmentLines.push("Encryption: " + (setupResult.encyption === true ? "Yes" : "No"));
+var equipmentText = equipmentLines.join("; ");
+
+// Build description text
+var description =
+  "Dear IT Onsite Support,\n\n" +
+  "The new employee, " + (name || "[Name]") + " " + (surname || "[Surname]") +
+  " will start on " + (startDate || "[Start Date]") + " with the following equipment:\n\n" +
+  equipmentText;
+
+// Construct payload (excluding ticketId and deliveryDate)
+var payload = {
+  requestedBy: supervisor || "Unknown",
+  employeeId: employeeId || "",
+  name: name || "",
+  surname: surname || "",
+  startDate: startDate || "",
+  hardwareRequired: equipmentText,
+  description: description,
+  dateRequested: today,
+  ticketStatus: "Open",
+  ticketStatusUpdated: timestamp
+};
+
+// Set variable for service task
+execution.setVariable("ticketPayload", payload);
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_1ir976p">
+      <bpmn:incoming>Flow_0tslj0i</bpmn:incoming>
+      <bpmn:incoming>Flow_0ph8euk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xtw84f</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0icycfu" name="send ticket" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/0y732h6kl2fgy2yorzoif5pckpdabg8p</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xtw84f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l67l99</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_15w8hn3">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="HardwareReceived" name="Hardware received">
+      <bpmn:incoming>Flow_0l67l99</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ias75o</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0t09zwn" messageRef="Message_1bsba3q" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="Activity_0oz860d" name="Personalize Computer">
+      <bpmn:incoming>Flow_1ias75o</bpmn:incoming>
+      <bpmn:outgoing>Flow_13182qo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0cjcxuc" name="Install hardware">
+      <bpmn:incoming>Flow_13182qo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r22ame</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_06mx0wl" name="Update ticket" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables" />
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/dy3mfbgu2kkcf9einmnzrxgtunaz68wl</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0r22ame</bpmn:incoming>
+      <bpmn:outgoing>Flow_16kgx9h</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1sdknic">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_1wl6eif">
+      <bpmn:incoming>Flow_09kertz</bpmn:incoming>
+      <bpmn:incoming>Flow_0rpu9ja</bpmn:incoming>
+      <bpmn:outgoing>Flow_01x12af</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="Event_0er3wym" name="Onboarding new emplyoee compedted">
+      <bpmn:incoming>Flow_01x12af</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0l7dtvg" name="Notify Supervisor" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables" />
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/0be7i69iar6serjlo5nyeu3ds7nupr2r</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c5tk5b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ph8euk</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g_entryDateEmployee" name="Entry &#60; 2 weeks?" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_0p63az9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c5tk5b</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tslj0i</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_087wc1v" name="Check entry date" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/ryfv62oo2kbq4k3xwsrl7rb9316tl4j4</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables">employeeId</camunda:inputParameter>
+          <camunda:inputParameter name="api_connect_result_variables">IsTooShortNotice</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11drbb9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p63az9</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0zq0rqw">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Activity_1r3tirt" name="Remove variable" scriptFormat="javascript">
+      <bpmn:documentation>Remove Variable</bpmn:documentation>
+      <bpmn:incoming>Flow_1czs5rv</bpmn:incoming>
+      <bpmn:outgoing>Flow_11drbb9</bpmn:outgoing>
+      <bpmn:script>execution.removeVariable("ticketPayload");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_0fo3jud" name="Create ticket in service portal" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables">ticketPayload</camunda:inputParameter>
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/jblovttdbb7j7vzt6e6emgeef93acxni</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1iydf2c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1czs5rv</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1ty9ft7">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="Event_18nzrdz" name="Start Date of new Employee">
+      <bpmn:incoming>Flow_16kgx9h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xde9s1</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_16l72lv">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="Activity_09fgvqh" name="Onboard new employee" camunda:formRef="Onboarding_Supervisor" camunda:formRefBinding="deployment">
+      <bpmn:incoming>Flow_1xde9s1</bpmn:incoming>
+      <bpmn:outgoing>Flow_09kertz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_059mgur" name="Create ticket in service portal for SAP account" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables">contractPayload</camunda:inputParameter>
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/rkucdb6hxp9hyz9oxlwa29tqgpbix86b</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0k5uaf0</bpmn:incoming>
+      <bpmn:outgoing>Flow_02vicyb</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_06ppll1">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_02gmghw" name="Check role, create SAP User account and close ticket" camunda:modelerTemplate="onl.mrtn.camunda.http.api_connect" camunda:modelerTemplateVersion="2" camunda:delegateExpression="${api_connect}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="api_connect_api_variables" />
+          <camunda:inputParameter name="api_connect_result_variables" />
+        </camunda:inputOutput>
+        <camunda:field name="api_connect_url">
+          <camunda:string>https://hook.eu2.make.com/kvxh4uk3q3ka1nmnlbxi48sx9uiqqcvc</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_authorization">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_api_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variables">
+          <camunda:string>true</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_result_variable">
+          <camunda:string>None</camunda:string>
+        </camunda:field>
+        <camunda:field name="api_connect_verbosity_outgoing">
+          <camunda:string>plain</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02vicyb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rpu9ja</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0cwhb44">
+        <bpmn:targetRef>DataStoreReference_0tbikj6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_372ep41" name="SignedContractReceived" />
+  <bpmn:message id="Message_1bsba3q" name="HardwareReceived" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Final">
+      <bpmndi:BPMNShape id="Participant_0szfh0x_di" bpmnElement="Participant_0szfh0x" isHorizontal="true">
+        <dc:Bounds x="160" y="250" width="3310" height="850" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0u4anwz_di" bpmnElement="Lane_0u4anwz" isHorizontal="true">
+        <dc:Bounds x="190" y="930" width="3280" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1m389q4_di" bpmnElement="Lane_1m389q4" isHorizontal="true">
+        <dc:Bounds x="190" y="780" width="3280" height="150" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0y7wflb_di" bpmnElement="Lane_0y7wflb" isHorizontal="true">
+        <dc:Bounds x="190" y="250" width="3280" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1c8zv4a_di" bpmnElement="Lane_1c8zv4a" isHorizontal="true">
+        <dc:Bounds x="190" y="530" width="3280" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_096kyn9_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="252" y="602" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="240" y="645" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vb46kc_di" bpmnElement="defineContract">
+        <dc:Bounds x="350" y="580" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ndzxn0_di" bpmnElement="createContract">
+        <dc:Bounds x="480" y="580" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r1n7e4_di" bpmnElement="sendContract">
+        <dc:Bounds x="620" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o8rcgn_di" bpmnElement="Activity_19gh440">
+        <dc:Bounds x="760" y="580" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0x3xqsd_di" bpmnElement="DataStoreReference_0x3xqsd">
+        <dc:Bounds x="595" y="405" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="576" y="366" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0tbikj6_di" bpmnElement="DataStoreReference_0tbikj6">
+        <dc:Bounds x="2275" y="665" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2259" y="722" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05g2ssx_di" bpmnElement="e_WaitForSignedContract">
+        <dc:Bounds x="915" y="595" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="904" y="558" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03c5owm_di" bpmnElement="Event_155m8fb">
+        <dc:Bounds x="922" y="702" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="922" y="745" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u9f1f6_di" bpmnElement="SignedContractReceived">
+        <dc:Bounds x="1032" y="602" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1013" y="645" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04dekzx_di" bpmnElement="Event_04dekzx">
+        <dc:Bounds x="1032" y="702" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1012" y="745" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06uzn98_di" bpmnElement="Gateway_1nfi60h">
+        <dc:Bounds x="1125" y="595" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1dwthk1" bpmnElement="dmnDecideSetup">
+        <dc:Bounds x="1220" y="580" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08mo8ci_di" bpmnElement="Activity_0nedc58">
+        <dc:Bounds x="1370" y="580" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ir976p_di" bpmnElement="Gateway_1ir976p" isMarkerVisible="true">
+        <dc:Bounds x="2165" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hb7r3h_di" bpmnElement="Activity_0icycfu">
+        <dc:Bounds x="2260" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14fha9t_di" bpmnElement="HardwareReceived">
+        <dc:Bounds x="2412" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2407" y="475" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_021ynuo_di" bpmnElement="Activity_0oz860d">
+        <dc:Bounds x="2500" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vj99yl_di" bpmnElement="Activity_0cjcxuc">
+        <dc:Bounds x="2660" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ozerg7_di" bpmnElement="Activity_06mx0wl">
+        <dc:Bounds x="2810" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1fht2rt_di" bpmnElement="Gateway_1wl6eif">
+        <dc:Bounds x="3225" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0er3wym_di" bpmnElement="Event_0er3wym">
+        <dc:Bounds x="3342" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3319" y="475" width="82" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13frew5_di" bpmnElement="Activity_0l7dtvg">
+        <dc:Bounds x="2030" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0jmdw8n_di" bpmnElement="g_entryDateEmployee" isMarkerVisible="true">
+        <dc:Bounds x="1915" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1900" y="281" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0shwunv_di" bpmnElement="Activity_087wc1v">
+        <dc:Bounds x="1780" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gu3wf1_di" bpmnElement="Activity_1r3tirt">
+        <dc:Bounds x="1640" y="290" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bcbm6b_di" bpmnElement="Activity_0fo3jud">
+        <dc:Bounds x="1500" y="290" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05hk2dq_di" bpmnElement="Event_18nzrdz">
+        <dc:Bounds x="2982" y="832" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2959" y="875" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04yca5c_di" bpmnElement="Activity_09fgvqh">
+        <dc:Bounds x="3090" y="810" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_013d113_di" bpmnElement="Activity_059mgur">
+        <dc:Bounds x="1220" y="980" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g6o6at_di" bpmnElement="Activity_02gmghw">
+        <dc:Bounds x="1370" y="980" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0c2j4qk_di" bpmnElement="Flow_0c2j4qk">
+        <di:waypoint x="860" y="620" />
+        <di:waypoint x="915" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zis88b_di" bpmnElement="Flow_0zis88b">
+        <di:waypoint x="940" y="645" />
+        <di:waypoint x="940" y="702" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05rs7uq_di" bpmnElement="Flow_05rs7uq">
+        <di:waypoint x="965" y="620" />
+        <di:waypoint x="1032" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d0umhu_di" bpmnElement="Flow_0d0umhu">
+        <di:waypoint x="1068" y="620" />
+        <di:waypoint x="1125" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vmqwyt_di" bpmnElement="Flow_1vmqwyt">
+        <di:waypoint x="1175" y="620" />
+        <di:waypoint x="1220" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k5uaf0_di" bpmnElement="Flow_0k5uaf0">
+        <di:waypoint x="1150" y="645" />
+        <di:waypoint x="1150" y="1020" />
+        <di:waypoint x="1220" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jih8qy_di" bpmnElement="Flow_0jih8qy">
+        <di:waypoint x="1320" y="620" />
+        <di:waypoint x="1370" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iydf2c_di" bpmnElement="Flow_1iydf2c">
+        <di:waypoint x="1470" y="620" />
+        <di:waypoint x="1550" y="620" />
+        <di:waypoint x="1550" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03ce4q4_di" bpmnElement="Flow_03ce4q4">
+        <di:waypoint x="958" y="720" />
+        <di:waypoint x="1032" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c5tk5b_di" bpmnElement="Flow_0c5tk5b">
+        <di:waypoint x="1965" y="330" />
+        <di:waypoint x="2030" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1985" y="315" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ph8euk_di" bpmnElement="Flow_0ph8euk">
+        <di:waypoint x="2130" y="330" />
+        <di:waypoint x="2190" y="330" />
+        <di:waypoint x="2190" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tslj0i_di" bpmnElement="Flow_0tslj0i">
+        <di:waypoint x="1940" y="355" />
+        <di:waypoint x="1940" y="450" />
+        <di:waypoint x="2165" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1945" y="410" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xtw84f_di" bpmnElement="Flow_0xtw84f">
+        <di:waypoint x="2215" y="450" />
+        <di:waypoint x="2260" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l67l99_di" bpmnElement="Flow_0l67l99">
+        <di:waypoint x="2360" y="450" />
+        <di:waypoint x="2412" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ias75o_di" bpmnElement="Flow_1ias75o">
+        <di:waypoint x="2448" y="450" />
+        <di:waypoint x="2500" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13182qo_di" bpmnElement="Flow_13182qo">
+        <di:waypoint x="2600" y="450" />
+        <di:waypoint x="2660" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r22ame_di" bpmnElement="Flow_0r22ame">
+        <di:waypoint x="2760" y="450" />
+        <di:waypoint x="2810" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16kgx9h_di" bpmnElement="Flow_16kgx9h">
+        <di:waypoint x="2910" y="450" />
+        <di:waypoint x="3000" y="450" />
+        <di:waypoint x="3000" y="832" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09kertz_di" bpmnElement="Flow_09kertz">
+        <di:waypoint x="3140" y="810" />
+        <di:waypoint x="3140" y="450" />
+        <di:waypoint x="3225" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rpu9ja_di" bpmnElement="Flow_0rpu9ja">
+        <di:waypoint x="1470" y="1020" />
+        <di:waypoint x="3250" y="1020" />
+        <di:waypoint x="3250" y="475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01x12af_di" bpmnElement="Flow_01x12af">
+        <di:waypoint x="3275" y="450" />
+        <di:waypoint x="3342" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xde9s1_di" bpmnElement="Flow_1xde9s1">
+        <di:waypoint x="3018" y="850" />
+        <di:waypoint x="3090" y="850" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p63az9_di" bpmnElement="Flow_0p63az9">
+        <di:waypoint x="1880" y="330" />
+        <di:waypoint x="1915" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11drbb9_di" bpmnElement="Flow_11drbb9">
+        <di:waypoint x="1740" y="330" />
+        <di:waypoint x="1780" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jqfn75_di" bpmnElement="Flow_0jqfn75">
+        <di:waypoint x="288" y="620" />
+        <di:waypoint x="350" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10xcyqg_di" bpmnElement="Flow_10xcyqg">
+        <di:waypoint x="450" y="620" />
+        <di:waypoint x="480" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pxy4km_di" bpmnElement="Flow_0pxy4km">
+        <di:waypoint x="580" y="620" />
+        <di:waypoint x="620" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hmz7yk_di" bpmnElement="Flow_1hmz7yk">
+        <di:waypoint x="720" y="620" />
+        <di:waypoint x="760" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1czs5rv_di" bpmnElement="Flow_1czs5rv">
+        <di:waypoint x="1600" y="330" />
+        <di:waypoint x="1640" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02vicyb_di" bpmnElement="Flow_02vicyb">
+        <di:waypoint x="1320" y="1020" />
+        <di:waypoint x="1370" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_1qplyf5_di" bpmnElement="Participant_1ipwzro" isHorizontal="true">
+        <dc:Bounds x="1700" y="120" width="1770" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0unl9a0" bpmnElement="Participant_1x33sab" isHorizontal="true">
+        <dc:Bounds x="210" y="120" width="1460" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09ok33n_di" bpmnElement="Flow_09ok33n">
+        <di:waypoint x="1050" y="180" />
+        <di:waypoint x="1050" y="602" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p6c1fx_di" bpmnElement="Flow_0p6c1fx">
+        <di:waypoint x="2310" y="410" />
+        <di:waypoint x="2310" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_15w8hn3_di" bpmnElement="DataOutputAssociation_15w8hn3">
+        <di:waypoint x="2308" y="490" />
+        <di:waypoint x="2297" y="665" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05d6pki_di" bpmnElement="Flow_05d6pki">
+        <di:waypoint x="2430" y="180" />
+        <di:waypoint x="2430" y="432" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1sdknic_di" bpmnElement="DataOutputAssociation_1sdknic">
+        <di:waypoint x="2810" y="490" />
+        <di:waypoint x="2325" y="685" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0zq0rqw_di" bpmnElement="DataOutputAssociation_0zq0rqw">
+        <di:waypoint x="1830" y="370" />
+        <di:waypoint x="2275" y="667" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0towwtc_di" bpmnElement="DataOutputAssociation_0towwtc">
+        <di:waypoint x="445" y="581" />
+        <di:waypoint x="595" y="452" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0yncrnb_di" bpmnElement="DataOutputAssociation_0yncrnb">
+        <di:waypoint x="551" y="580" />
+        <di:waypoint x="615" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0qtdxqa_di" bpmnElement="DataOutputAssociation_0qtdxqa">
+        <di:waypoint x="659" y="580" />
+        <di:waypoint x="623" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1ty9ft7_di" bpmnElement="DataOutputAssociation_1ty9ft7">
+        <di:waypoint x="1600" y="354" />
+        <di:waypoint x="2275" y="685" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0cwhb44_di" bpmnElement="DataOutputAssociation_0cwhb44">
+        <di:waypoint x="1470" y="1002" />
+        <di:waypoint x="2275" y="706" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_06ppll1_di" bpmnElement="DataOutputAssociation_06ppll1">
+        <di:waypoint x="1320" y="1004" />
+        <di:waypoint x="2275" y="696" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

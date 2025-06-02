@@ -1,0 +1,83 @@
+{
+  "components": [
+    {
+      "text": "# Onboarching Checklist for Supervisors",
+      "type": "text",
+      "key": "introText",
+      "label": "### Onboarding Checklist for Supervisors",
+      "description": "This checklist ensures that all critical onboarding steps are completed by the supervisor for a smooth employee start. Please mark each item as completed.",
+      "disabled": true,
+      "id": "Field_1fmbpny",
+      "layout": {
+        "row": "Row_1i42ytc"
+      }
+    },
+    {
+      "label": "1. Explain Culture & Values",
+      "type": "checkbox",
+      "key": "check_culture",
+      "description": "Introduce the team’s principles, values, and behaviors. Emphasize openness, trust, and ownership.",
+      "id": "Field_10kwz4a",
+      "layout": {
+        "row": "Row_089n7dh"
+      }
+    },
+    {
+      "label": "2. Organize First Day Logistics",
+      "type": "checkbox",
+      "key": "check_day1",
+      "description": "Meet employee at reception, hand over equipment (if available), and confirm participation in welcome lunch.",
+      "id": "Field_1u2m162",
+      "layout": {
+        "row": "Row_0x4226v"
+      }
+    },
+    {
+      "label": "3. Confirm IT Setup",
+      "type": "checkbox",
+      "key": "check_tools",
+      "description": "Ensure the employee has access to Outlook, Teams, SharePoint, intranet, and IT support channels.",
+      "id": "Field_1b2631m",
+      "layout": {
+        "row": "Row_0cadrg5"
+      }
+    },
+    {
+      "label": "4. Explain Organizational Structure & Introduce Team",
+      "type": "checkbox",
+      "key": "check_org",
+      "description": "Walk through the org chart and introduce the employee to key team members and stakeholders.",
+      "id": "Field_0x2wmof",
+      "layout": {
+        "row": "Row_0vx8bkm"
+      }
+    },
+    {
+      "label": "5. Schedule Development Session",
+      "type": "checkbox",
+      "key": "check_learning",
+      "description": "Set up an initial development discussion and explain available training resources and programs.",
+      "id": "Field_11abrpm",
+      "layout": {
+        "row": "Row_00y0lkl"
+      }
+    },
+    {
+      "label": "6. Complete Admin Onboarding",
+      "type": "checkbox",
+      "key": "check_admin",
+      "description": "Support personal data entry in the HR system, and ensure badge and access rights are provided.",
+      "id": "Field_1bx99ry",
+      "layout": {
+        "row": "Row_0qvkyjr"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Onboarding_Supervisor",
+  "schemaVersion": 18,
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.34.0"
+  }
+}
