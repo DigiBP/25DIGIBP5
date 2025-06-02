@@ -88,9 +88,11 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - explain what you improved
 - refer to tasks (maybe)
 
-## Process Section: Contract Creation and Dispatch
+## Process Start: Contract Creation and Dispatch
 The onboarding process begins with the start event **`New contract requested`**, which is triggered whenever a new employment contract is initiated.
-In the user task **`Define contract`**, HR personnel enter all relevant employee data using a structured Camunda form. These values are stored in the Excel file **`My new employee (Antworten).xlsx`**, which currently acts as a placeholder for an integrated CRM system.
+In the user task **`Define contract`**, HR personnel enter all relevant employee data using a structured Camunda form **'Information On New Employee'**. This form serves as the digital entry point for all relevant employee data and, with all fields being mandatory, guarantees complete and valid submissions. By digitizing this input at the very start, the process guarantees end-to-end data consistency and eliminates manual data transfer between systems. These values are stored in the Excel file **`My new employee (Antworten).xlsx`**, which currently acts as a placeholder for an integrated CRM system. 
+
+![image](https://github.com/user-attachments/assets/0a00f630-6d42-42af-9be7-9cea984c8488)
 
 ## Contract Generation and External Dispatch
 Once the data is captured, the script task **`Create contract`** compiles the form input into a structured JSON object named `contractPayload`. This payload contains all fields required for contract generation.
@@ -103,20 +105,10 @@ The following service task **`Send contract`** sends this payload via HTTP to th
 Immediately after dispatch, the `contractPayload` is explicitly removed in a script task named **`Remove variable`**. Temporary payloads like `contractPayload` and `ticketPayload` are structured JSON objects that **Camunda 7.x cannot persist reliably** across wait states (e.g., message events or timers). If not removed, they can trigger runtime incidents such as: SPIN/JACKSON-JSON-01006 Cannot deserialize object in variable ...
 To prevent such errors, both variables are deleted directly after their last usage:
 
-```javascript
-execution.removeVariable("contractPayload");
-execution.removeVariable("ticketPayload");
-
  ![image](https://github.com/user-attachments/assets/1f001e59-f289-4a1f-9a73-fa2594ce1243)
 
 ![image](https://github.com/user-attachments/assets/ed6806b9-4161-4dde-934b-2c2dbb7c6cf8)
 
-
-
-### Forms
-- include picture
-- why decide on setup
-- explain what happens
 
 ## Jasmin plus DMN
 ![image](https://github.com/user-attachments/assets/fde8ac36-606a-478c-8d8b-a0e1f5227aab)
