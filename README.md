@@ -84,11 +84,10 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - no need to get into each and every task
 # Digitalisation of the Onboarding Process
 ![image](https://github.com/user-attachments/assets/ccd98821-ccf2-46ad-b1e7-4716d8f7bf4a)
-## Process Improvements
+# Process Improvements
 ## Benefits of the New Onboarding Process
- 
 The improved onboarding workflow delivers tangible benefits across teams:
- 
+
 ### Higher Automation
 - Key steps like contract handling, ticket creation, setup payload generation, and SAP account provisioning are now automated.
 - Result: fewer manual handovers, reduced error rates, and faster turnaround times.
@@ -256,20 +255,22 @@ As the final step of the onboarding process, a digital checklist is provided to 
 
 ### WHAT HAPPENS
 
-- The employee watches the onboarding video and the Supervisor will review checklist items.
-- Once completed, the Supervisor and the new Employee confirm by checking a box and submitting the form.
-- The confirmation is automatically sent to HR and IT for documentation.
-- This ensures formal closure of the onboarding process and provides traceability.
+The onboarding checklist for supervisors provides a clear structure to ensure that all essential steps in welcoming and integrating a new employee are covered. It focuses not only on logistical aspects but also on culture, communication, and development from day one.
+
+First, supervisors are encouraged to introduce the team's core values and principles. This includes explaining expected behaviors and fostering a culture of openness, trust, and ownership. 
+Following that, they are responsible for organizing first-day logistics, such as meeting the new employee at reception, handing over equipment if available, and confirming participation in any planned welcome events like lunch.
+Next, the supervisor verifies that the IT setup is complete and that the employee has access to critical systems such as Outlook, Teams, SharePoint, and the company intranet, as well as IT support channels.
+After the technical basics are in place, the organizational structure should be explained, and the new team member introduced to key colleagues and stakeholders.
+An initial development session should also be scheduled to talk about available training options, career development tools, and performance expectations.
+Finally, the checklist includes completing administrative onboarding tasks—supporting data entry in the HR system and ensuring that access badges and necessary permissions are issued.
+Overall, the checklist helps supervisors deliver a structured, smooth, and professional onboarding experience that supports both immediate productivity and long-term engagement.
+
+This ensures formal closure of the onboarding process and provides traceability.
 
 ### BENEFITS
 
 - Standardized onboarding experience for all employees.
 - Digital confirmation ensures transparency and accountability.
-- No need for manual follow-ups or emails.
-- Can easily be extended with feedback fields or additional resources.
-
-
-
 
 
 
