@@ -110,7 +110,7 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 
 ![BPMN Overview](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
 
-This module is part of the digital onboarding process and ensures that IT hardware can be delivered on time for new employees. It validates if the lead time before the employee's start date is sufficient and triggers appropriate actions if not.
+This Part in the digital onboarding process ensures that IT hardware can be delivered on time for new employees. It validates if the lead time before the employee's start date is sufficient and triggers appropriate actions if not.
 
 If the entry date is **less than 14 days away**, a new delivery date is calculated automatically, the supervisor is informed, and the onboarding ticket is updated—**all without manual interaction**.
 
@@ -219,7 +219,7 @@ The link is delivered via email and can be accessed through a simple HTML page.
 ### WHAT HAPPENS
 
 - The employee watches the onboarding video and reviews the checklist items.
-- Once completed, they confirm by checking a box and submitting the form.
+- Once completed, the Supervisor and the new Employee confirm by checking a box and submitting the form.
 - The confirmation is automatically sent to HR and IT for documentation.
 - This ensures formal closure of the onboarding process and provides traceability.
 
