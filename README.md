@@ -210,15 +210,13 @@ After the Hardware is received from the External IT Provider the Internal IT wil
 
 ![image](https://github.com/user-attachments/assets/5e794a42-e610-460f-b58a-4cdd243f0f99)
 
-As the final step of the onboarding process, a digital checklist is provided to the new employee on their first working day. This checklist includes an introductory video and a confirmation section to ensure that all necessary steps and setups have been completed.
-
-The link is delivered via email and can be accessed through a simple HTML page.
+As the final step of the onboarding process, a digital checklist is provided to the Supervisor to support through the Onbording Prozess so nothing is missing to ensure that all necessary steps and setups have been completed.
 
 ![image](https://github.com/user-attachments/assets/a5c2471d-1061-419d-9f7f-bea878db8dd7)
 
 ### WHAT HAPPENS
 
-- The employee watches the onboarding video and reviews the checklist items.
+- The employee watches the onboarding video and the Supervisor will review checklist items.
 - Once completed, the Supervisor and the new Employee confirm by checking a box and submitting the form.
 - The confirmation is automatically sent to HR and IT for documentation.
 - This ensures formal closure of the onboarding process and provides traceability.
