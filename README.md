@@ -199,6 +199,8 @@ parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, 
 ## Onbording first Day of the Employee
 ![image](https://github.com/user-attachments/assets/5e794a42-e610-460f-b58a-4cdd243f0f99)
 - Checkliste bild plus erklärung
+  ![image](https://github.com/user-attachments/assets/a5c2471d-1061-419d-9f7f-bea878db8dd7)
+
 
 
 
