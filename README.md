@@ -83,8 +83,31 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - explain general process flow
 - no need to get into each and every task
 # Digitalisation of the Onboarding Process
+![image](https://github.com/user-attachments/assets/ccd98821-ccf2-46ad-b1e7-4716d8f7bf4a)
+## Process Improvements Gilles
+- explain what you improved
+- refer to tasks (maybe)
 
-### AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
+## Jasmin
+![image](https://github.com/user-attachments/assets/ea39f011-24ff-4586-a7ac-5427fb531059)
+
+
+### Forms
+- include picture
+- why decide on setup
+- explain what happens
+
+## Jasmin plus DMN
+![image](https://github.com/user-attachments/assets/fde8ac36-606a-478c-8d8b-a0e1f5227aab)
+- include picture
+- why decide on this setup
+- explain what happns
+![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
+
+
+## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
+
+![image](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
 
 In the full onboarding process, once the contract is signed, the system prepares the technical setup for the new employee. This involves generating a setup payload, creating a ticket in the service portal, and triggering the delivery of required hardware.
 
@@ -166,19 +189,13 @@ parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, 
 * Camunda Modeler
 * Google Sheets (as request/ticket database)
 
-
-## Process Improvements
-- explain what you improved
-- refer to tasks (maybe)
-
-## DMN
-- include picture
-- why decide on this setup
-- explain what happns
-![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
+## Onbording first Day of the Employee
+![image](https://github.com/user-attachments/assets/5e794a42-e610-460f-b58a-4cdd243f0f99)
+- Checkliste bild plus erklärung
 
 
-## Forms
-- include picture
-- why decide on setup
-- explain what happens
+
+
+
+
+
