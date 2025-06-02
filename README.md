@@ -88,9 +88,29 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 - explain what you improved
 - refer to tasks (maybe)
 
-## Jasmin
-![image](https://github.com/user-attachments/assets/ea39f011-24ff-4586-a7ac-5427fb531059)
-![image](https://github.com/user-attachments/assets/b81366a1-790d-492d-b5d8-5a45de066736)
+## Process Section: Contract Creation and Dispatch
+The onboarding process begins with the start event **`New contract requested`**, which is triggered whenever a new employment contract is initiated.
+In the user task **`Define contract`**, HR personnel enter all relevant employee data using a structured Camunda form. These values are stored in the Excel file **`My new employee (Antworten).xlsx`**, which currently acts as a placeholder for an integrated CRM system.
+
+## Contract Generation and External Dispatch
+Once the data is captured, the script task **`Create contract`** compiles the form input into a structured JSON object named `contractPayload`. This payload contains all fields required for contract generation.
+The following service task **`Send contract`** sends this payload via HTTP to the Make.com scenario **`Create Contract`**. This scenario performs two parallel actions:
+- Generates a contract PDF using **PDF.co**
+- Logs the contract data in **Google Sheets** **`My new employee (Antworten).xlsx`**
+
+![image](https://github.com/user-attachments/assets/050b9be0-5926-4362-9097-e3417dfca6f9)
+
+Immediately after dispatch, the `contractPayload` is explicitly removed in a script task named **`Remove variable`**. Temporary payloads like `contractPayload` and `ticketPayload` are structured JSON objects that **Camunda 7.x cannot persist reliably** across wait states (e.g., message events or timers). If not removed, they can trigger runtime incidents such as: SPIN/JACKSON-JSON-01006 Cannot deserialize object in variable ...
+To prevent such errors, both variables are deleted directly after their last usage:
+
+```javascript
+execution.removeVariable("contractPayload");
+execution.removeVariable("ticketPayload");
+
+ ![image](https://github.com/user-attachments/assets/1f001e59-f289-4a1f-9a73-fa2594ce1243)
+
+![image](https://github.com/user-attachments/assets/ed6806b9-4161-4dde-934b-2c2dbb7c6cf8)
+
 
 
 ### Forms
