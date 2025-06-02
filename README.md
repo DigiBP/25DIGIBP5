@@ -108,94 +108,102 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 
 ## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
-![image](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
+## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
-In the full onboarding process, once the contract is signed, the system prepares the technical setup for the new employee. This involves generating a setup payload, creating a ticket in the service portal, and triggering the delivery of required hardware.
+![BPMN Overview](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
 
-If the entry date is too soon (less than 14 days), it may not be feasible to deliver everything on time. This module handles that situation by:
+This module is part of the digital onboarding process and ensures that IT hardware can be delivered on time for new employees. It validates if the lead time before the employee's start date is sufficient and triggers appropriate actions if not.
 
-* Calculating if the request is too short notice
-* Notifying the supervisor
-* Automatically adjusting the delivery date
-* Updating the internal Google Sheet and Camunda workflow accordingly
+If the entry date is **less than 14 days away**, a new delivery date is calculated automatically, the supervisor is informed, and the onboarding ticket is updated—**all without manual interaction**.
 
 ### WHAT THIS MODULE DOES
 
 #### GOAL
 
-Ensure realistic lead times for onboarding hardware delivery and communicate changes.
+To ensure timely and realistic planning for hardware setup and delivery in the onboarding process.
 
 #### FLOW SUMMARY
 
-1. Camunda triggers Make with entry data (start date, ticket info, etc.)
-2. Make evaluates if the requested entry date is less than 14 days away
-3. If yes:
-
-   * A new delivery date is calculated (14 days from request)
-   * Supervisor is notified
-   * Ticket status and delivery date are updated
-   * Camunda receives IsTooShortNotice = true
-4. If no:
-
-   * Process continues with the original delivery date
+1. Camunda triggers a **Make scenario** using webhook integration.
+2. Make checks whether the current delivery timeline is too short (less than 14 days).
+3. If too short:
+   - A new delivery date is calculated (request date + 14 days)
+   - The supervisor is notified by email
+   - Google Sheet entry is updated
+   - Camunda is informed: `IsTooShortNotice = true`
+4. If timeline is okay:
+   - Process continues as planned with the existing delivery date
 
 ### IMPLEMENTATION DETAILS
 
 #### CAMUNDA BPM
 
-* Service Task: "Check entry date" sends data to Make webhook
-* Exclusive Gateway: Evaluates IsTooShortNotice variable
-* Conditional Paths:
-
-  * If true: Notify supervisor and adjust delivery
-  * If false: Continue as planned
-* Downstream Use: Both paths set a common variable deliveryDate, which is used in the ticketing step
+* A **Service Task** sends data (Employee ID, start date, etc.) to the webhook in Make.
+* An **Exclusive Gateway** checks the response variable `IsTooShortNotice`.
+* Depending on the value:
+  - If true: triggers supervisor notification and updated delivery planning
+  - If false: uses the initially submitted date
+* The variable `deliveryDate` is used in both paths to keep the logic consistent.
 
 #### MAKE SCENARIO OVERVIEW
-![image](https://github.com/user-attachments/assets/3f1f4a1f-70c5-4aed-b1bb-cd2d6cc3c6e5)
 
-1. Webhook receives POST from Camunda
-2. Google Sheets (Search) finds the row by Employee ID
-3. Router evaluates date difference
-4. If too short notice:
+![Make Scenario Router](https://github.com/user-attachments/assets/3f1f4a1f-70c5-4aed-b1bb-cd2d6cc3c6e5)
 
-   * Set variable deliveryDateCalculated = requestDate + 14 days
-   * Update delivery date and ticket status
-   * Return response with IsTooShortNotice = true
-5. Else:
+This is the automation logic inside Make:
 
-   * Return IsTooShortNotice = false and keep existing date
+1. **Webhook** receives the Camunda request
+2. **Search Rows**: Finds the employee in Google Sheets using Employee ID
+3. **Filter / Condition**: Checks if entry date is at least 14 days away
+4. **If too short notice:**
+   - New delivery date is calculated (request date + 14 days)
+   - Sheet is updated with:
+     - New delivery date
+     - Status: `"Updated"`
+   - Response: `IsTooShortNotice = true`
+5. **If lead time is sufficient:**
+   - No change made
+   - Response: `IsTooShortNotice = false`
 
 #### DATE EVALUATION LOGIC
 
-```
+```js
 parseDate(2.`Start Date`, "DD.MM.YYYY") < addDays(parseDate(2.`Date requested`, "DD.MM.YYYY"), 14)
 ```
 
+This filter checks if the start date is less than 14 days after the request date.
+
 ### GOOGLE SHEETS UPDATE
 
-* Delivery Date column is set to deliveryDateCalculated
-* Ticket Status column is set to "Updated"
-* Row to update is found using the rowNumber from the search module
+- The corresponding row is identified using the **Employee ID**.
+- The **Delivery Date** is automatically adjusted.
+- The **Ticket Status** is changed to `"Updated"`.
 
-### Send Email do Supervisor if No
-![image](https://github.com/user-attachments/assets/426d24a1-5d17-430f-b2c9-9c0d5fbb5239)
-### Send Email to It Provider with required Hardware
-![image](https://github.com/user-attachments/assets/165b0f83-41f1-4e10-afcd-28f99c7de6fd)
+### EMAIL TO SUPERVISOR
 
+![Supervisor Email Notification](https://github.com/user-attachments/assets/426d24a1-5d17-430f-b2c9-9c0d5fbb5239)
+
+If the requested delivery time is too short, the system notifies the supervisor via email. This ensures transparency and allows proactive planning.
+
+### EMAIL TO IT PROVIDER
+
+![IT Provider Notification](https://github.com/user-attachments/assets/165b0f83-41f1-4e10-afcd-28f99c7de6fd)
+
+The IT provider receives a structured email with the exact hardware and setup requirements for the new employee—generated from the previously selected configuration via DMN logic.
 
 ### ADVANTAGES
 
-* Automated logic replaces manual review
-* Human escalation only when needed (via supervisor notification)
-* Dynamic update to Google Sheets without scripting
-* Easily pluggable into any BPMN process with Camunda
+- Fully **automated validation** of onboarding timelines
+- Ensures no manual checking or chasing is needed
+- Allows **supervisors to act only when necessary**
+- Seamless integration between Camunda, Make, and Google Sheets
+- Saves time and improves onboarding reliability
 
 ### RELATED TOOLS
 
-* Make (Integromat)
-* Camunda Modeler
-* Google Sheets (as request/ticket database)
+- **Make (Integromat)** – Automation platform
+- **Camunda Modeler** – BPMN workflow management
+- **Google Sheets** – Central data hub for onboarding tickets
+
 
 ## Onbording first Day of the Employee
 ![image](https://github.com/user-attachments/assets/5e794a42-e610-460f-b58a-4cdd243f0f99)
