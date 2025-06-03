@@ -115,22 +115,61 @@ The improved onboarding workflow delivers tangible benefits across teams:
 - The standardized and automated setup scales efficiently across teams and sites.
 - Ideal for growing organizations or high onboarding volumes.
 
-### Process Start: Contract Creation and Dispatch
-The onboarding process begins with the start event **`New contract requested`**, which is triggered whenever a new employment contract is initiated.
-In the user task **`Define contract`**, HR personnel enter all relevant employee data using a structured Camunda form **'Information On New Employee'**. This form serves as the digital entry point for all relevant employee data and, with all fields being mandatory, guarantees complete and valid submissions. By digitizing this input at the very start, the process guarantees end-to-end data consistency and eliminates manual data transfer between systems. These values are stored in the Excel file **`My new employee (Antworten).xlsx`**, which currently acts as a placeholder for an integrated CRM system. 
+# AUTOMATED CONTRACT CREATION AND DELIVERY
+
+## BPMN Overview
+
+This part of the digital onboarding process starts with the event **`New contract requested`**, which is triggered by HR when a new employee is to be onboarded. It then handles the automated generation, dispatch, and tracking of employment contracts. It ensures that contract data is captured in a structured format, transmitted to external services for processing, and monitored until the signed document is returned. All steps are fully automated and require no manual intervention after HR submits the initial form.
+
+## WHAT THIS MODULE DOES
+
+### GOAL
+
+To automate the contract creation and delivery process by digitizing employee data input, generating PDF contracts, logging relevant data, and waiting for confirmation — all while maintaining process stability and compliance.
+
+### FLOW SUMMARY
+
+- HR fills out a structured input form in Camunda  
+- All form fields are mandatory to ensure completeness and data quality, and to enable fully automated downstream processing without the need for manual data correction  
+- A script task generates a JSON payload (`contractPayload`) from the form data  
+- A service task sends the payload to a Make.com scenario  
+- Make.com creates a PDF contract (via PDF.co) and logs the data in Google Sheets  
+- The payload is removed after dispatch to prevent serialization issues, specifically Spin deserialization errors such as `SPIN/JACKSON-JSON-01006`, which may occur if nested objects persist across asynchronous steps  
+- Camunda waits for the signed contract (up to 7 days) using an event-based gateway. If the message is not received within this period, a timer boundary event on the message catch task ends the process  
+- If received: process continues  
+- If not received: process ends
+
+## IMPLEMENTATION DETAILS
+
+### CAMUNDA BPM
+
+- **User Task:** `Define contract` — HR enters all relevant data via structured form  
+- **Script Task:** `Create contract` — transforms data into `contractPayload` (JSON)  
+- **Service Task:** `Send contract` — sends payload to Make via HTTP  
+- **Script Task:** `Remove variable` — deletes `contractPayload` to prevent Spin deserialization errors  
+- **Message Catch Event:** waits for `SignedContractReceived`  
+- **Timer Boundary Event:** cancels the process if no signature is returned within 7 days
+
+### MAKE SCENARIO OVERVIEW
+
+- **Webhook** receives the payload from Camunda  
+- **Router** triggers two parallel paths:  
+  - **PDF.co:** generates the contract as PDF  
+  - **Google Sheets:** logs employee and contract data  
+- **Output:** confirms successful processing
+
+### VARIABLE CLEANUP
+
+```javascript
+execution.removeVariable("contractPayload");
+execution.removeVariable("ticketPayload");
+
 
 ![image](https://github.com/user-attachments/assets/0a00f630-6d42-42af-9be7-9cea984c8488)
 
-### Contract Generation and External Dispatch
-Once the data is captured, the script task **`Create contract`** compiles the form input into a structured JSON object named `contractPayload`. This payload contains all fields required for contract generation.
-The following service task **`Send contract`** sends this payload via HTTP to the Make.com scenario **`Create Contract`**. This scenario performs two parallel actions:
-- Generates a contract PDF using **PDF.co**
-- Logs the contract data in **Google Sheets** **`My new employee (Antworten).xlsx`**
 
 ![image](https://github.com/user-attachments/assets/050b9be0-5926-4362-9097-e3417dfca6f9)
 
-Immediately after dispatch, the `contractPayload` is explicitly removed in a script task named **`Remove variable`**. Temporary payloads like `contractPayload` and `ticketPayload` are structured JSON objects that **Camunda 7.x cannot persist reliably** across wait states (e.g., message events or timers). If not removed, they can trigger runtime incidents such as: SPIN/JACKSON-JSON-01006 Cannot deserialize object in variable ...
-To prevent such errors, both variables are deleted directly after their last usage:
 
  ![image](https://github.com/user-attachments/assets/1f001e59-f289-4a1f-9a73-fa2594ce1243)
 
