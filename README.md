@@ -223,11 +223,12 @@ Based on the combination of `Role` and `Mobility`, the following outputs are def
 
 ![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
 
+
 ### SAP USER CREATION TICKET VIA MAKE
 
-![SAP Ticket Trigger](https://github.com/user-attachments/assets/b5fa4d4e-155c-49ac-9501-6c1d545be77f)
-
 While the DMN logic defines the required SAP access levels, the process also triggers a separate Make scenario to create a ticket for the SAP department.
+
+![SAP Ticket Trigger](https://github.com/user-attachments/assets/b5fa4d4e-155c-49ac-9501-6c1d545be77f)
 
 This side branch of the onboarding workflow performs the following:
 
