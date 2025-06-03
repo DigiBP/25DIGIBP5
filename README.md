@@ -160,6 +160,21 @@ To automate the contract creation and delivery process by digitizing employee da
 ![image](https://github.com/user-attachments/assets/3e824059-3347-4e87-9215-eca8c95b09f3)
 ![image](https://github.com/user-attachments/assets/3f387e33-8196-4626-9548-9055afc6d937)
 
+#### POSTMAN OVERVIEW - USED FOR MESSAGE CATCH EVENT
+The event is triggered externally by sending a message via the Camunda REST API. This allows simulation and integration with external systems (e.g. Docusign).
+
+To simulate the message reception via Postman:
+- **Method:** `POST`  
+- **URL:** `https://<camunda-server>/engine-rest/message`  
+- **Headers:** `Content-Type: application/json`  
+- **Body:**
+
+{
+  "messageName": "SignedContractReceived",
+  "businessKey": "YOUR_PROCESS_INSTANCE_BUSINESS_KEY"
+}
+
+
 #### FUTURE IMPROVEMENTS - eSIGNATURE INTEGRATION
 The process can be extended to include digital signing via services like **DocuSign** or **Adobe Sign**. After contract generation, the PDF would be:
 - Sent automatically for signature
@@ -175,6 +190,7 @@ execution.removeVariable("ticketPayload");
 - Make (Integromat): Automation platform
 - Camunda Modeler: BPMN workflow management
 - Google Sheets: Central data hub for information on employee
+- Postman: Simulation of signed contract received
 
 
 ## DMN - DETERMINE SETUP OF NEW EMPLOYEE
@@ -380,6 +396,21 @@ The IT provider receives a structured email with the exact hardware and setup re
 ### Hardware received and installed
 After the Hardware is received from the External IT Provider the Internal IT will install the Hardware and fullfill the Usertask in Camunda the Google Forms then will update the Status of the Ticket to done with the Date and time.
 
+#### POSTMAN OVERVIEW - USED FOR MESSAGE CATCH EVENT
+The event is triggered externally by sending a message via the Camunda REST API to simulate the receipt of the hardware.
+
+To simulate the message reception via Postman:
+- **Method:** `POST`  
+- **URL:** `https://<camunda-server>/engine-rest/message`  
+- **Headers:** `Content-Type: application/json`  
+- **Body:**
+
+{
+  "messageName": "HardwareReceived",
+  "businessKey": "YOUR_PROCESS_INSTANCE_BUSINESS_KEY"
+}
+
+
 ### ADVANTAGES
 
 - Fully **automated validation** of onboarding timelines
@@ -393,6 +424,7 @@ After the Hardware is received from the External IT Provider the Internal IT wil
 - **Make (Integromat)** – Automation platform
 - **Camunda Modeler** – BPMN workflow management
 - **Google Sheets** – Central data hub for onboarding tickets
+- **Postman** - Simulatio of Hardware received
 
 
 ## ONBOARDING FIRST DAY OF THE EMPLOYEE
@@ -423,7 +455,12 @@ This ensures formal closure of the onboarding process and provides traceability.
 - Digital confirmation ensures transparency and accountability.
 
 
+# LINKS
 
+**Google Sheet - Ticketing System SNOW**: https://docs.google.com/spreadsheets/d/13k5fA20LIqMRKZEzLRBSk8IYvtqWcN5pYFdKsIwxZ_o/edit?usp=sharing
 
+**Google Sheet - My new employee**: https://docs.google.com/spreadsheets/d/1hhiLwUhfL_jMdI90sm_WGVLJqdzsWvnNceuhtx8Jt3c/edit?usp=sharing
+
+**Postman - Signed Contract Received & Hardware Received**: https://team-5-8291.postman.co/workspace/Team-5-Workspace~9c70eb46-242d-4ed2-8c24-360966037da9/request/42620232-f2eedb83-67e6-4ff8-a5ec-d2a156d213e3?action=share&creator=42620232&ctx=documentation
 
 
