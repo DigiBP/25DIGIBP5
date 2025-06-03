@@ -179,7 +179,7 @@ execution.removeVariable("ticketPayload");
 - Google Sheets: Central data hub for information on employee
 
 
-## Jasmin plus DMN
+## DMN - DETERMINE SETUP OF NEW EMPLOYEE
 ![image](https://github.com/user-attachments/assets/fde8ac36-606a-478c-8d8b-a0e1f5227aab)
 
 This repository contains a DMN (Decision Model and Notation) table used to determine the appropriate IT setup for new employees during the onboarding process. The decision logic ensures standardized, rule-based allocation of hardware, software, phone equipment, and encryption settings based on employee role and mobility requirements.
@@ -220,11 +220,10 @@ Based on the combination of `Role` and `Mobility`, the following outputs are def
 - Easy to extend and maintain as roles or equipment evolve
 - Integrates into automated onboarding workflows
  
-
 ![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
 
 
-### SAP USER CREATION TICKET VIA MAKE
+## SAP USER CREATION TICKET VIA MAKE
 
 While the DMN logic defines the required SAP access levels, the process also triggers a separate Make scenario to create a ticket for the SAP department.
 
