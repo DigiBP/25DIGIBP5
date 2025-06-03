@@ -147,6 +147,8 @@ To automate the contract creation and delivery process by digitizing employee da
 - **Message Catch Event:** waits for `SignedContractReceived`  
 - **Timer Boundary Event:** cancels the process if no signature is returned within 7 days
 
+![image](https://github.com/user-attachments/assets/cb974c86-4400-4f59-b56f-5cb3561b951d)
+
 ### MAKE SCENARIO OVERVIEW
 - **Webhook** receives the payload from Camunda  
 - **Router** triggers two parallel paths:  
@@ -156,6 +158,9 @@ To automate the contract creation and delivery process by digitizing employee da
     - Start date  
     - Contract status  
     - Timestamp of creation
+ 
+![image](https://github.com/user-attachments/assets/3e824059-3347-4e87-9215-eca8c95b09f3)
+![image](https://github.com/user-attachments/assets/3f387e33-8196-4626-9548-9055afc6d937)
 
 ### FUTURE IMPROVEMENTS - eSIGNATURE INTEGRATION
 The process can be extended to include digital signing via services like **DocuSign** or **Adobe Sign**. After contract generation, the PDF would be:
