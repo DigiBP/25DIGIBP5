@@ -163,7 +163,12 @@ To automate the contract creation and delivery process by digitizing employee da
 ![image](https://github.com/user-attachments/assets/fde8ac36-606a-478c-8d8b-a0e1f5227aab)
 
 This repository contains a DMN (Decision Model and Notation) table used to determine the appropriate IT setup for new employees during the onboarding process. The decision logic ensures standardized, rule-based allocation of hardware, software, phone equipment, and encryption settings based on employee role and mobility requirements.
- 
+### SAP Ticket 
+![image](https://github.com/user-attachments/assets/5eee5d17-5ccd-45e5-8426-259cee65e470)
+
+
+ ![image](https://github.com/user-attachments/assets/a0afef93-67ac-4bbc-9aed-4a6fcd081fa9)
+
 ### Purpose
  
 The DMN decision table automates the selection of IT equipment and software configurations for new hires. It supports consistent decision-making and reduces manual coordination between HR, IT, and other stakeholders.
