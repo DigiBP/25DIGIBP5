@@ -461,6 +461,6 @@ This ensures formal closure of the onboarding process and provides traceability.
 
 **Google Sheet - My new employee**: https://docs.google.com/spreadsheets/d/1hhiLwUhfL_jMdI90sm_WGVLJqdzsWvnNceuhtx8Jt3c/edit?usp=sharing
 
-**Postman - Signed Contract Received & Hardware Received**: https://team-5-8291.postman.co/workspace/Team-5-Workspace~9c70eb46-242d-4ed2-8c24-360966037da9/request/42620232-f2eedb83-67e6-4ff8-a5ec-d2a156d213e3?action=share&creator=42620232&ctx=documentation
+**Postman - Signed Contract Received & Hardware Received** (Postman Setup also defined in the documentation abvove): ttps://team-5-8291.postman.co/workspace/Team-5-Workspace~9c70eb46-242d-4ed2-8c24-360966037da9/request/42620232-f2eedb83-67e6-4ff8-a5ec-d2a156d213e3?action=share&creator=42620232&ctx=documentation
 
 
