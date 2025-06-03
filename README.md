@@ -115,7 +115,7 @@ The improved onboarding workflow delivers tangible benefits across teams:
 - The standardized and automated setup scales efficiently across teams and sites.
 - Ideal for growing organizations or high onboarding volumes.
 
-# AUTOMATED CONTRACT CREATION AND DELIVERY
+# PROCESS START: AUTOMATED CONTRACT CREATION AND DELIVERY
 
 ## BPMN Overview
 
@@ -157,23 +157,6 @@ To automate the contract creation and delivery process by digitizing employee da
   - **PDF.co:** generates the contract as PDF  
   - **Google Sheets:** logs employee and contract data  
 - **Output:** confirms successful processing
-
-### VARIABLE CLEANUP
-
-```javascript
-execution.removeVariable("contractPayload");
-execution.removeVariable("ticketPayload");
-
-
-![image](https://github.com/user-attachments/assets/0a00f630-6d42-42af-9be7-9cea984c8488)
-
-
-![image](https://github.com/user-attachments/assets/050b9be0-5926-4362-9097-e3417dfca6f9)
-
-
- ![image](https://github.com/user-attachments/assets/1f001e59-f289-4a1f-9a73-fa2594ce1243)
-
-![image](https://github.com/user-attachments/assets/ed6806b9-4161-4dde-934b-2c2dbb7c6cf8)
 
 
 ## Jasmin plus DMN
