@@ -222,18 +222,28 @@ Based on the combination of `Role` and `Mobility`, the following outputs are def
  
 
 ![image](https://github.com/user-attachments/assets/b9b2331c-df8b-481c-a406-519c033abc0c)
+
 ### SAP USER CREATION TICKET VIA MAKE
-![image](https://github.com/user-attachments/assets/b5fa4d4e-155c-49ac-9501-6c1d545be77f)
+
+![SAP Ticket Trigger](https://github.com/user-attachments/assets/b5fa4d4e-155c-49ac-9501-6c1d545be77f)
 
 While the DMN logic defines the required SAP access levels, the process also triggers a separate Make scenario to create a ticket for the SAP department.
-Camunda sends a webhook to Make with all necessary SAP-related data
-Make automatically creates a new entry in a Google Sheet representing the SAP ticket
-The ticket contains key information such as employee ID, required access, and timestamp
-Once the SAP user is created, the sheet is updated to reflect the status
-![image](https://github.com/user-attachments/assets/5eee5d17-5ccd-45e5-8426-259cee65e470)
-![image](https://github.com/user-attachments/assets/a0afef93-67ac-4bbc-9aed-4a6fcd081fa9)
- 
-This side branch is not the main focus of this project but ensures seamless integration with the SAP department for final account provisioning.
+
+This side branch of the onboarding workflow performs the following:
+
+- Camunda sends a webhook to Make with all necessary SAP-related data  
+- Make creates a new row in a Google Sheet representing the SAP ticket  
+- The ticket includes:
+  - Employee ID  
+  - Required SAP roles or access  
+  - Timestamp for tracking  
+- Once the SAP team has created the user, the status field in the sheet is updated accordingly
+
+This integration ensures a seamless and traceable handover between the automation system and the SAP department—even though this module is not the core focus of the project.
+
+![SAP Sheet Entry](https://github.com/user-attachments/assets/5eee5d17-5ccd-45e5-8426-259cee65e470)  
+![SAP Sheet Update](https://github.com/user-attachments/assets/a0afef93-67ac-4bbc-9aed-4a6fcd081fa9)
+
 ## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
 ![BPMN Overview](https://github.com/user-attachments/assets/e89325c7-aa8a-49dc-bb89-47378c29ab23)
