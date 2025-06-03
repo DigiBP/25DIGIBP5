@@ -80,7 +80,8 @@ Late or incomplete ticket submissions trigger reactive measures like reschedulin
 **Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
 
 # To-Be Process - Digitalisation of the Onboarding Process
-![image](https://github.com/user-attachments/assets/ccd98821-ccf2-46ad-b1e7-4716d8f7bf4a)
+![image](https://github.com/user-attachments/assets/bcaa49d9-5b39-45bb-9e49-00c1174f1ed5)
+
 
 ## Process Improvements
 ### Benefits of the New Onboarding Process
