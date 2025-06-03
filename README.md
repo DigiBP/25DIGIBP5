@@ -79,54 +79,52 @@ ServiceNow does not offer a consolidated view of onboarding tickets. HR relies s
 Late or incomplete ticket submissions trigger reactive measures like rescheduling hardware handovers rather than proactive interventions.  
 **Risk:** Deteriorated first-day experience for new hires and reduced onboarding quality.
 
-# To-Be Process
-- explain general process flow
-- no need to get into each and every task
-# Digitalisation of the Onboarding Process
+# To-Be Process - Digitalisation of the Onboarding Process
 ![image](https://github.com/user-attachments/assets/ccd98821-ccf2-46ad-b1e7-4716d8f7bf4a)
-# Process Improvements
-## Benefits of the New Onboarding Process
+
+## Process Improvements
+### Benefits of the New Onboarding Process
 The improved onboarding workflow delivers tangible benefits across teams:
 
-### Higher Automation
+#### Higher Automation
 - Key steps like contract handling, ticket creation, setup payload generation, and SAP account provisioning are now automated.
 - Result: fewer manual handovers, reduced error rates, and faster turnaround times.
  
-### Unified Platform
+#### Unified Platform
 - All teams work within the same centralized ticketing system (e.g. ServiceNow).
 - This creates a **single source of truth**, ensuring consistent data and better traceability.
  
-### Improved Handling of Short-Notice Hires
+#### Improved Handling of Short-Notice Hires
 - Automatic notifications for hires with <2 weeks’ lead time.
 - Replaces fragile workarounds (e.g. saving forms to file shares) and improves preparedness.
  
-### Clear Role Allocation
+#### Clear Role Allocation
 - Responsibilities are defined:
  - **HR** → Contract management 
  - **IT** → Hardware preparation 
  - **SAP Team** → Account creation
 - Leads to smoother collaboration and fewer misunderstandings.
  
-### Measurable Process Completion
+#### Measurable Process Completion
 - Process concludes with a defined step: _“Onboarding new employee completed”_.
 - Enables structured reporting and quality monitoring.
  
-### Scalability Through Structured Workflows
+#### Scalability Through Structured Workflows
 - The standardized and automated setup scales efficiently across teams and sites.
 - Ideal for growing organizations or high onboarding volumes.
 
-# PROCESS START - AUTOMATED CONTRACT CREATION AND DELIVERY
+## PROCESS START - AUTOMATED CONTRACT CREATION AND DELIVERY
 
-## BPMN Overview
+### BPMN Overview
 
 This part of the digital onboarding process starts with the event **`New contract requested`**, which is triggered by HR when a new employee is to be onboarded. It then handles the automated generation, dispatch, and tracking of employment contracts. It ensures that contract data is captured in a structured format, transmitted to external services for processing, and monitored until the signed document is returned. All steps are fully automated and require no manual intervention after HR submits the initial form.
 
-## WHAT THIS MODULE DOES
+### WHAT THIS MODULE DOES
 
-### GOAL
+#### GOAL
 To automate the contract creation and delivery process by digitizing employee data input, generating PDF contracts, logging relevant data, and waiting for confirmation — all while maintaining process stability and compliance.
 
-### FLOW SUMMARY
+#### FLOW SUMMARY
 - HR fills out a structured input form in Camunda  
 - All form fields are mandatory to ensure completeness and data quality, and to enable fully automated downstream processing without the need for manual data correction  
 - A script task generates a JSON payload (`contractPayload`) from the form data  
@@ -137,9 +135,9 @@ To automate the contract creation and delivery process by digitizing employee da
 - If received: process continues  
 - If not received: process ends
 
-## IMPLEMENTATION DETAILS
+### IMPLEMENTATION DETAILS
 
-### CAMUNDA BPM
+#### CAMUNDA BPM
 - **User Task:** `Define contract` — HR enters all relevant data via structured form  
 - **Script Task:** `Create contract` — transforms data into `contractPayload` (JSON)  
 - **Service Task:** `Send contract` — sends payload to Make via HTTP  
@@ -149,7 +147,7 @@ To automate the contract creation and delivery process by digitizing employee da
 
 ![image](https://github.com/user-attachments/assets/cb974c86-4400-4f59-b56f-5cb3561b951d)
 
-### MAKE SCENARIO OVERVIEW
+#### MAKE SCENARIO OVERVIEW
 - **Webhook** receives the payload from Camunda  
 - **Router** triggers two parallel paths:  
   - **PDF.co:** generates the contract as PDF  
@@ -162,18 +160,18 @@ To automate the contract creation and delivery process by digitizing employee da
 ![image](https://github.com/user-attachments/assets/3e824059-3347-4e87-9215-eca8c95b09f3)
 ![image](https://github.com/user-attachments/assets/3f387e33-8196-4626-9548-9055afc6d937)
 
-### FUTURE IMPROVEMENTS - eSIGNATURE INTEGRATION
+#### FUTURE IMPROVEMENTS - eSIGNATURE INTEGRATION
 The process can be extended to include digital signing via services like **DocuSign** or **Adobe Sign**. After contract generation, the PDF would be:
 - Sent automatically for signature
 - Tracked via API callback or polling
 - Stored with legal validity
 This would complete the contract flow digitally and eliminate manual handovers.
 
-### VARIABLE CLEANUP - JAVASCRIPT
+#### VARIABLE CLEANUP - JAVASCRIPT
 execution.removeVariable("contractPayload");
 execution.removeVariable("ticketPayload");
 
-### RELATED TOOLS
+#### RELATED TOOLS
 - Make (Integromat): Automation platform
 - Camunda Modeler: BPMN workflow management
 - Google Sheets: Central data hub for information on employee
@@ -243,6 +241,59 @@ This integration ensures a seamless and traceable handover between the automatio
 
 ![SAP Sheet Entry](https://github.com/user-attachments/assets/5eee5d17-5ccd-45e5-8426-259cee65e470)  
 ![SAP Sheet Update](https://github.com/user-attachments/assets/a0afef93-67ac-4bbc-9aed-4a6fcd081fa9)
+
+## PROCESS SECTION – CREATE TICKET IN SERVICE PORTAL
+This section of the onboarding process automates the creation of an internal IT onboarding ticket by sending a structured JSON payload from Camunda to a Make.com scenario. The data is recorded in a central Google Sheet used as the service portal log.
+
+### FLOW OVERVIEW
+
+1. **Determine IT Requirements (DMN Decision Table)**  
+   A DMN decision table evaluates the employee's role and determines the required hardware, software, and access rights.
+2. **Generate Payload**  
+   A script task in Camunda compiles the determined values and other employee details into a structured `ticketPayload` object.
+3. **Send to Webhook**  
+   The payload is transmitted via HTTP POST to a custom webhook in Make.com.
+4. **Create Row in Google Sheet**  
+   Make.com adds a new row in the `SNOW` sheet of the `Ticketing System SNOW` spreadsheet, capturing all relevant data fields.
+
+![image](https://github.com/user-attachments/assets/f6fce47b-a0bb-499d-b452-4645f52f0196)
+
+
+### GOOGLE SHEETS INTEGRATION DETAILS
+
+| Column | Field                      | Source                          |
+|--------|----------------------------|----------------------------------|
+| A      | Ticket ID                  | (optional / autogenerated)       |
+| B      | Requested by               | `ticketPayload.requestedBy`      |
+| C      | Employee ID                | `employeeId`                     |
+| D      | Name                       | `ticketPayload.name`             |
+| E      | Surname                    | `ticketPayload.surname`          |
+| F      | Start Date                 | `ticketPayload.startDate`        |
+| G      | Hardware required          | `ticketPayload.hardwareRequired` |
+| H      | Delivery date              | `ticketPayload.deliveryDate`     |
+| I      | Description                | `ticketPayload.description`      |
+| J      | Date requested             | `ticketPayload.dateRequested`    |
+| K      | Ticket Status              | `ticketPayload.ticketStatus`     |
+| L      | Ticket Status updated      | `ticketPayload.ticketStatusUpdated` |
+
+### CONFIGURATION NOTES
+
+- **Spreadsheet ID:** `/ Ticketing System SNOW`  
+- **Sheet Name:** `SNOW`  
+- **Table headers:** Must be enabled  
+- **Ticket ID:** Can be auto-generated using Google Sheets formula (e.g. `=ROW()-1`)  
+- **Webhook:** Expects a valid JSON body from Camunda
+
+![image](https://github.com/user-attachments/assets/dd857817-deb7-4ca4-b619-c10703d62bb3)
+
+
+### ADVANTAGES
+- Fully automated creation of IT onboarding tickets
+- Eliminates manual data entry and email-based coordination
+- Ensures consistency and completeness of ticket data
+- Enables process tracking, escalation logic, and SLA adherence
+- Reduces operational friction and onboarding cycle times
+- Easy to extend with notifications, escalations, or status updates
 
 ## AUTOMATED DELIVERY DATE CHECK FOR NEW EMPLOYEE ONBOARDING
 
