@@ -115,7 +115,7 @@ The improved onboarding workflow delivers tangible benefits across teams:
 - The standardized and automated setup scales efficiently across teams and sites.
 - Ideal for growing organizations or high onboarding volumes.
 
-# PROCESS START: AUTOMATED CONTRACT CREATION AND DELIVERY
+# PROCESS START - AUTOMATED CONTRACT CREATION AND DELIVERY
 
 ## BPMN Overview
 
@@ -124,11 +124,9 @@ This part of the digital onboarding process starts with the event **`New contrac
 ## WHAT THIS MODULE DOES
 
 ### GOAL
-
 To automate the contract creation and delivery process by digitizing employee data input, generating PDF contracts, logging relevant data, and waiting for confirmation — all while maintaining process stability and compliance.
 
 ### FLOW SUMMARY
-
 - HR fills out a structured input form in Camunda  
 - All form fields are mandatory to ensure completeness and data quality, and to enable fully automated downstream processing without the need for manual data correction  
 - A script task generates a JSON payload (`contractPayload`) from the form data  
@@ -142,7 +140,6 @@ To automate the contract creation and delivery process by digitizing employee da
 ## IMPLEMENTATION DETAILS
 
 ### CAMUNDA BPM
-
 - **User Task:** `Define contract` — HR enters all relevant data via structured form  
 - **Script Task:** `Create contract` — transforms data into `contractPayload` (JSON)  
 - **Service Task:** `Send contract` — sends payload to Make via HTTP  
@@ -151,12 +148,30 @@ To automate the contract creation and delivery process by digitizing employee da
 - **Timer Boundary Event:** cancels the process if no signature is returned within 7 days
 
 ### MAKE SCENARIO OVERVIEW
-
 - **Webhook** receives the payload from Camunda  
 - **Router** triggers two parallel paths:  
   - **PDF.co:** generates the contract as PDF  
-  - **Google Sheets:** logs employee and contract data  
-- **Output:** confirms successful processing
+  - **Google Sheets:** creates a new row entry that logs all relevant employee and contract information, including:  
+    - Employee name and ID  
+    - Start date  
+    - Contract status  
+    - Timestamp of creation
+
+### FUTURE IMPROVEMENTS - eSIGNATURE INTEGRATION
+The process can be extended to include digital signing via services like **DocuSign** or **Adobe Sign**. After contract generation, the PDF would be:
+- Sent automatically for signature
+- Tracked via API callback or polling
+- Stored with legal validity
+This would complete the contract flow digitally and eliminate manual handovers.
+
+### VARIABLE CLEANUP - JAVASCRIPT
+execution.removeVariable("contractPayload");
+execution.removeVariable("ticketPayload");
+
+### RELATED TOOLS
+- Make (Integromat): Automation platform
+- Camunda Modeler: BPMN workflow management
+- Google Sheets: Central data hub for information on employee
 
 
 ## Jasmin plus DMN
