@@ -458,6 +458,8 @@ This ensures formal closure of the onboarding process and provides traceability.
 
 # LINKS
 
+**Video**: https://fhnw365.sharepoint.com/:v:/t/P-DBP-Group5_M365/EVoM7qQ0sQlOlLFwMlqDxcgB5QN0deI5N_6BnU92Yl2GLw?e=eITRlL
+
 **Google Sheet - Ticketing System SNOW**: https://docs.google.com/spreadsheets/d/13k5fA20LIqMRKZEzLRBSk8IYvtqWcN5pYFdKsIwxZ_o/edit?usp=sharing
 
 **Google Sheet - My new employee**: https://docs.google.com/spreadsheets/d/1hhiLwUhfL_jMdI90sm_WGVLJqdzsWvnNceuhtx8Jt3c/edit?usp=sharing
